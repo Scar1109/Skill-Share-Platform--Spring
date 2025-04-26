@@ -7,6 +7,7 @@ import Calendar from "../components/calendar";
 import Workouts from "../components/workouts";
 import AddCourseVideo from "../components/add-course-video";
 import "../css/profilepage.css";
+import WorkoutPlan from "../components/workoutPlan";
 
 function ProfilePage() {
   const [activeView, setActiveView] = useState("dashboard");
@@ -38,6 +39,8 @@ function ProfilePage() {
         return <Workouts onClassSelect={handleClassSelect} />;
       case "add-course-video":
         return <AddCourseVideo />;
+        case "workout-plan":
+        return <WorkoutPlan />;
       default:
         return <Dashboard onClassSelect={handleClassSelect} />;
     }

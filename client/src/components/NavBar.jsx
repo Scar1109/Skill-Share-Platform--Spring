@@ -43,7 +43,7 @@ function NavBar() {
             <nav className={`navigation567 ${isMenuOpen ? "active901" : ""}`}>
                 <ul className="nav-list890">
                     <li className="nav-item123">
-                        <a href="#home" className="nav-link456">
+                        <a href="/" className="nav-link456">
                             Home
                         </a>
                     </li>
