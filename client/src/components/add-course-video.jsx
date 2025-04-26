@@ -273,11 +273,11 @@ export default function AddCourseVideo() {
                 <p className="video-category">{video.category}</p>
                 <p className="video-description">{video.description}</p>
                 <div className="video-actions">
-                  <button className="action-btn edit-btn" onClick={() => handleEditVideo(video)}>
+                  <button className="action-btn video-edit-btn" onClick={() => handleEditVideo(video)}>
                     <Edit size={18} className="action-icon" />
                     Edit
                   </button>
-                  <button className="action-btn delete-btn" onClick={() => handleDeleteVideo(video.id)}>
+                  <button className="action-btn video-delete-btn" onClick={() => handleDeleteVideo(video.id)}>
                     <Trash2 size={18} className="action-icon" />
                     Delete
                   </button>

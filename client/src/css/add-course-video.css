@@ -107,21 +107,21 @@
   transition: background-color 0.2s;
 }
 
-.edit-btn {
+.video-edit-btn {
   background-color: var(--color-gray-700);
   color: white;
 }
 
-.edit-btn:hover {
+.video-edit-btn:hover {
   background-color: var(--color-gray-600);
 }
 
-.delete-btn {
+.video-delete-btn {
   background-color: var(--color-gray-700);
   color: white;
 }
 
-.delete-btn:hover {
+.video-delete-btn:hover {
   background-color: var(--color-red-600);
 }
 
