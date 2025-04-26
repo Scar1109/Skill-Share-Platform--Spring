@@ -25,7 +25,7 @@ public class PostService {
 
     // Get all posts
     public List<Post> getAllPosts() {
-        return postRepository.findAll();  // Retrieve all posts
+        return postRepository.findAll();
     }
 
     // Get posts by userId
@@ -35,7 +35,7 @@ public class PostService {
 
     // Get a post by its ID
     public Optional<Post> getPostById(String id) {
-        return postRepository.findById(id);  // Retrieve post by ID
+        return postRepository.findById(id);
     }
 
     // Update post details
@@ -46,5 +46,51 @@ public class PostService {
     // Delete a post by ID
     public void deletePost(String postId) {
         postRepository.deleteById(postId);
+    }
+    
+    // Get posts by category
+    public List<Post> getPostsByCategory(String category) {
+        return postRepository.findByCategory(category);
+    }
+    
+    // Search posts by title
+    public List<Post> searchPostsByTitle(String title) {
+        return postRepository.findByTitleContainingIgnoreCase(title);
+    }
+    
+    // Like a post
+    public Post likePost(String postId, String userId) {
+        Optional<Post> optionalPost = postRepository.findById(postId);
+        if (optionalPost.isPresent()) {
+            Post post = optionalPost.get();
+            if (!post.getLikedBy().contains(userId)) {
+                post.getLikedBy().add(userId);
+                post.setLikeCount(post.getLikeCount() + 1);
+                return postRepository.save(post);
+            }
+            return post;
+        }
+        return null;
+    }
+    
+    // Unlike a post
+    public Post unlikePost(String postId, String userId) {
+        Optional<Post> optionalPost = postRepository.findById(postId);
+        if (optionalPost.isPresent()) {
+            Post post = optionalPost.get();
+            if (post.getLikedBy().contains(userId)) {
+                post.getLikedBy().remove(userId);
+                post.setLikeCount(post.getLikeCount() - 1);
+                return postRepository.save(post);
+            }
+            return post;
+        }
+        return null;
+    }
+    
+    // Check if a user has liked a post
+    public boolean hasUserLikedPost(String postId, String userId) {
+        Optional<Post> optionalPost = postRepository.findById(postId);
+        return optionalPost.map(post -> post.getLikedBy().contains(userId)).orElse(false);
     }
 }
