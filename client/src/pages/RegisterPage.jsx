@@ -209,6 +209,7 @@ function RegisterPage() {
                                     fill="#EA4335"
                                 />
                             </svg>
+                            <span style={{ color: "white", marginLeft:"12px" }}>Continue with Google</span>
                         </button>
                     </div>
                 </div>
