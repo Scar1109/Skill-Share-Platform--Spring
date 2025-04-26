@@ -5,6 +5,7 @@ import ClassDetails from "../components/class-details";
 import Profile from "../components/profile";
 import Calendar from "../components/calendar";
 import Workouts from "../components/workouts";
+import AddCourseVideo from "../components/add-course-video";
 import "../css/profilepage.css";
 
 function ProfilePage() {
@@ -21,13 +22,22 @@ function ProfilePage() {
       case "dashboard":
         return <Dashboard onClassSelect={handleClassSelect} />;
       case "classDetails":
-        return selectedClass && <ClassDetails classData={selectedClass} onBack={() => setActiveView("dashboard")} />;
+        return (
+          selectedClass && (
+            <ClassDetails
+              classData={selectedClass}
+              onBack={() => setActiveView("dashboard")}
+            />
+          )
+        );
       case "profile":
         return <Profile />;
       case "calendar":
         return <Calendar />;
       case "workouts":
         return <Workouts onClassSelect={handleClassSelect} />;
+      case "add-course-video":
+        return <AddCourseVideo />;
       default:
         return <Dashboard onClassSelect={handleClassSelect} />;
     }
