@@ -1,0 +1,129 @@
+.sidebar {
+  width: 16rem;
+  background-color: var(--color-gray-900);
+  border-right: 1px solid var(--color-card-border);
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-logo {
+  padding: 1.5rem;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-style: italic;
+  color: white;
+}
+
+.logo-subtext {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 1.5rem 1rem;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  text-align: left;
+  transition: background-color 0.2s, color 0.2s;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+}
+
+.nav-item:hover {
+  background-color: var(--color-gray-800);
+  color: white;
+}
+
+.nav-item.active {
+  background-color: var(--color-green-light);
+  color: var(--color-green-primary);
+}
+
+.nav-icon {
+  margin-right: 0.75rem;
+}
+
+.sidebar-user {
+  padding: 1rem;
+  border-top: 1px solid var(--color-card-border);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.user-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background-color: var(--color-gray-700);
+  margin-right: 0.75rem;
+}
+
+.user-name {
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.user-role {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.user-actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.user-action-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  text-align: left;
+  transition: background-color 0.2s, color 0.2s;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+}
+
+.user-action-btn:hover {
+  background-color: var(--color-gray-800);
+  color: white;
+}
+
+.action-icon {
+  margin-right: 0.75rem;
+}
+
+.action-text {
+  font-size: 0.875rem;
+}
