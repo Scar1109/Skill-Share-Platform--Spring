@@ -4,10 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SkillsharingplatformApplication {
+public class SkillSharingApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SkillsharingplatformApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(SkillSharingApplication.class, args);
+    }
 }
