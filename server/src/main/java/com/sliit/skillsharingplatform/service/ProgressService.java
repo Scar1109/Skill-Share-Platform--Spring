@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProgressService {
@@ -14,43 +13,33 @@ public class ProgressService {
     @Autowired
     private ProgressRepository progressRepository;
 
-    // Get all course progress records
-    public List<CourseProgress> getAllCourseProgress() {
+    // Get all course progress
+    public List<CourseProgress> getAllProgress() {
         return progressRepository.findAll();
     }
 
-    // Create new course progress
-    public CourseProgress createCourseProgress(CourseProgress courseProgress) {
+    // Get course progress by ID
+    public CourseProgress getProgressById(String id) {
+        return progressRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Progress not found"));
+    }
+
+    // Get course progress by course ID
+    public List<CourseProgress> getProgressByCourseId(String courseId) {
+        return progressRepository.findByCourseId(courseId);
+    }
+
+    // Create or update course progress
+    public CourseProgress createOrUpdateProgress(CourseProgress courseProgress) {
         return progressRepository.save(courseProgress);
     }
 
     // Delete course progress by ID
-    public void deleteCourseProgressById(String id) {
-        progressRepository.deleteById(id);
-    }
-
-    // Update course progress
-    public CourseProgress updateCourseProgress(String id, CourseProgress updatedProgress) {
-        Optional<CourseProgress> existingProgress = progressRepository.findById(id);
-        if (existingProgress.isPresent()) {
-            CourseProgress courseProgress = existingProgress.get();
-            courseProgress.setUserId(updatedProgress.getUserId());
-            courseProgress.setCourseId(updatedProgress.getCourseId());
-            courseProgress.setCompletedVideos(updatedProgress.getCompletedVideos());
-            courseProgress.setOverallProgress(updatedProgress.getOverallProgress());
-            return progressRepository.save(courseProgress);
-        } else {
-            return null; // Or throw an exception if not found
+    public boolean deleteProgress(String id) {
+        if (progressRepository.existsById(id)) {
+            progressRepository.deleteById(id);
+            return true;
         }
-    }
-
-    // Get course progress by ID
-    public Optional<CourseProgress> getCourseProgressById(String id) {
-        return progressRepository.findById(id);
-    }
-
-    // Get course progress by user ID
-    public List<CourseProgress> getCourseProgressByUserId(String userId) {
-        return progressRepository.findByUserId(userId);
+        return false;
     }
 }

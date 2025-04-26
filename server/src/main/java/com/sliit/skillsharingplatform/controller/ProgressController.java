@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/progress")
@@ -17,46 +16,40 @@ public class ProgressController {
     @Autowired
     private ProgressService progressService;
 
-    // Get all course progress records
+    // Get all course progress
     @GetMapping
-    public ResponseEntity<List<CourseProgress>> getAllCourseProgress() {
-        List<CourseProgress> progressList = progressService.getAllCourseProgress();
+    public ResponseEntity<List<CourseProgress>> getAllProgress() {
+        List<CourseProgress> progressList = progressService.getAllProgress();
         return new ResponseEntity<>(progressList, HttpStatus.OK);
     }
 
     // Get course progress by ID
     @GetMapping("/{id}")
-    public ResponseEntity<CourseProgress> getCourseProgressById(@PathVariable String id) {
-        Optional<CourseProgress> courseProgress = progressService.getCourseProgressById(id);
-        return courseProgress.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<CourseProgress> getProgressById(@PathVariable("id") String id) {
+        CourseProgress progress = progressService.getProgressById(id);
+        return progress != null ? new ResponseEntity<>(progress, HttpStatus.OK)
+                                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    // Get course progress by user ID
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<CourseProgress>> getCourseProgressByUserId(@PathVariable String userId) {
-        List<CourseProgress> courseProgress = progressService.getCourseProgressByUserId(userId);
-        return new ResponseEntity<>(courseProgress, HttpStatus.OK);
+    // Get course progress by course ID
+    @GetMapping("/course/{courseId}")
+    public ResponseEntity<List<CourseProgress>> getProgressByCourseId(@PathVariable("courseId") String courseId) {
+        List<CourseProgress> progressList = progressService.getProgressByCourseId(courseId);
+        return new ResponseEntity<>(progressList, HttpStatus.OK);
     }
 
-    // Create new course progress
+    // Create or update course progress
     @PostMapping
-    public ResponseEntity<CourseProgress> createCourseProgress(@RequestBody CourseProgress courseProgress) {
-        CourseProgress createdProgress = progressService.createCourseProgress(courseProgress);
+    public ResponseEntity<CourseProgress> createOrUpdateProgress(@RequestBody CourseProgress courseProgress) {
+        CourseProgress createdProgress = progressService.createOrUpdateProgress(courseProgress);
         return new ResponseEntity<>(createdProgress, HttpStatus.CREATED);
-    }
-
-    // Update course progress
-    @PutMapping("/{id}")
-    public ResponseEntity<CourseProgress> updateCourseProgress(@PathVariable String id, @RequestBody CourseProgress courseProgress) {
-        CourseProgress updatedProgress = progressService.updateCourseProgress(id, courseProgress);
-        return updatedProgress != null ? new ResponseEntity<>(updatedProgress, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     // Delete course progress by ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCourseProgressById(@PathVariable String id) {
-        progressService.deleteCourseProgressById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<String> deleteProgress(@PathVariable("id") String id) {
+        boolean isDeleted = progressService.deleteProgress(id);
+        return isDeleted ? new ResponseEntity<>("Progress record deleted successfully", HttpStatus.OK)
+                         : new ResponseEntity<>("Progress record not found", HttpStatus.NOT_FOUND);
     }
 }
