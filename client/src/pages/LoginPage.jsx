@@ -47,8 +47,9 @@ function LoginPage() {
             <input
               type="email"
               value={email}
+              style={{ backgroundColor: "#2D2D2D", color: "white" }}
               onChange={handleEmailChange}
-              placeholder="john.doe@gmail.com"
+              placeholder="User Name"
               className="form-input"
               required
             />
@@ -58,8 +59,9 @@ function LoginPage() {
             <input
               type={showPassword ? "text" : "password"}
               value={password}
+              style={{ backgroundColor: "#2D2D2D", color: "white" }}
               onChange={handlePasswordChange}
-              placeholder="••••••••••••••••••••"
+              placeholder="Password"
               className="form-input"
               required
             />
@@ -90,7 +92,7 @@ function LoginPage() {
 
         <div className="signup-option">
           <span>Don't have an account? </span>
-          <a href="#signup" className="signup-link">
+          <a href="/register" className="signup-link">
             Sign up
           </a>
         </div>
@@ -119,7 +121,7 @@ function LoginPage() {
                 fill="#EA4335"
               />
             </svg>
-            <span>Continue with Google</span>
+            <span style={{ color: "white" }}>Continue with Google</span>
           </button>
         </div>
       </div>

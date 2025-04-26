@@ -1,13 +1,13 @@
 /* Login Page Unique Styles */
 :root {
-    --primary-color: #5d4b63;
+    --primary-color: #191919;
     --accent-color: #ff6b6b;
     --text-color: #333;
     --light-text: #666;
     --border-color: #e0e0e0;
-    --background-color: #fff;
+    --background-color: #1f1f1f;
     --input-background: #fff;
-    --button-hover: #4a3b50;
+    --button-hover: #2D2D2D;
     --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -17,11 +17,6 @@
     padding: 0;
 }
 
-body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    color: var(--text-color);
-    background-color: #f5f5f5;
-}
 
 .login-container {
     display: flex;
@@ -29,6 +24,9 @@ body {
     align-items: center;
     min-height: 100vh;
     padding: 20px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    background-color: #191919;
 }
 
 .login-form-container {
@@ -45,12 +43,14 @@ body {
     font-weight: 600;
     color: var(--text-color);
     margin-bottom: 8px;
+    color: whitesmoke;
 }
 
 .login-subtitle {
     font-size: 16px;
     color: var(--light-text);
     margin-bottom: 30px;
+    color: whitesmoke;
 }
 
 .login-form {
@@ -122,6 +122,7 @@ body {
 .checkbox-label {
     font-size: 14px;
     color: var(--light-text);
+    color: whitesmoke;
 }
 
 .forgot-password {
@@ -157,6 +158,7 @@ body {
     text-align: center;
     font-size: 14px;
     color: var(--light-text);
+    color: whitesmoke;
 }
 
 .signup-link {
@@ -217,15 +219,15 @@ body {
     gap: 10px;
     width: 100%;
     padding: 12px 15px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--primary-color);
     border-radius: 6px;
-    background-color: white;
+    background-color: var(--primary-color);
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .google-login-button:hover {
-    background-color: #f8f8f8;
+    background-color: var(--button-hover);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 

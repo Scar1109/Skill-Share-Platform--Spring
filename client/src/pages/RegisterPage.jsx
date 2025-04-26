@@ -6,6 +6,7 @@ function RegisterPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [agreed, setAgreed] = useState(false);
+    const [userType, setUserType] = useState("user") // Default to "user"
 
     return (
         <div className="signup-container">
@@ -22,7 +23,8 @@ function RegisterPage() {
                             <input
                                 type="text"
                                 className="signup-input"
-                                placeholder="john.doe@gmail.com"
+                                placeholder=""
+                                style={{ backgroundColor: "#2D2D2D", color: "white" }}
                             />
                         </div>
 
@@ -31,7 +33,8 @@ function RegisterPage() {
                             <input
                                 type="text"
                                 className="signup-input"
-                                placeholder="john.doe@gmail.com"
+                                placeholder=""
+                                style={{ backgroundColor: "#2D2D2D", color: "white" }}
                             />
                         </div>
                     </div>
@@ -42,7 +45,8 @@ function RegisterPage() {
                             <input
                                 type="email"
                                 className="signup-input"
-                                placeholder="john.doe@gmail.com"
+                                placeholder=""
+                                style={{ backgroundColor: "#2D2D2D", color: "white" }}
                             />
                         </div>
 
@@ -51,7 +55,8 @@ function RegisterPage() {
                             <input
                                 type="tel"
                                 className="signup-input"
-                                placeholder="+94 77 895 5652"
+                                placeholder=""
+                                style={{ backgroundColor: "#2D2D2D", color: "white" }}
                             />
                         </div>
                     </div>
@@ -61,7 +66,8 @@ function RegisterPage() {
                         <input
                             type={showPassword ? "text" : "password"}
                             className="signup-input"
-                            placeholder="••••••••••••••••••••"
+                            placeholder=""
+                            style={{ backgroundColor: "#2D2D2D", color: "white" }}
                         />
                         <button
                             type="button"
@@ -69,9 +75,9 @@ function RegisterPage() {
                             onClick={() => setShowPassword(!showPassword)}
                         >
                             {showPassword ? (
-                                <EyeOffIcon size={20} />
-                            ) : (
                                 <EyeIcon size={20} />
+                            ) : (
+                                <EyeOffIcon size={20} />
                             )}
                         </button>
                     </div>
@@ -83,7 +89,8 @@ function RegisterPage() {
                         <input
                             type={showConfirmPassword ? "text" : "password"}
                             className="signup-input"
-                            placeholder="••••••••••••••••••••"
+                            placeholder=""
+                            style={{ backgroundColor: "#2D2D2D", color: "white" }}
                         />
                         <button
                             type="button"
@@ -93,11 +100,51 @@ function RegisterPage() {
                             }
                         >
                             {showConfirmPassword ? (
-                                <EyeOffIcon size={20} />
-                            ) : (
                                 <EyeIcon size={20} />
+                            ) : (
+                                <EyeOffIcon size={20} />
                             )}
                         </button>
+                    </div>
+
+                    <div className="signup-user-type">
+                        <p className="signup-user-type-label">Register as:</p>
+                        <div className="signup-user-type-options">
+                            <div
+                                className={`signup-user-type-option ${
+                                    userType === "user" ? "active" : ""
+                                }`}
+                                onClick={() => setUserType("user")}
+                            >
+                                <div className="signup-user-type-radio">
+                                    <div
+                                        className={`signup-user-type-radio-inner ${
+                                            userType === "user"
+                                                ? "selected"
+                                                : ""
+                                        }`}
+                                    ></div>
+                                </div>
+                                <span>As a User</span>
+                            </div>
+                            <div
+                                className={`signup-user-type-option ${
+                                    userType === "coach" ? "active" : ""
+                                }`}
+                                onClick={() => setUserType("coach")}
+                            >
+                                <div className="signup-user-type-radio">
+                                    <div
+                                        className={`signup-user-type-radio-inner ${
+                                            userType === "coach"
+                                                ? "selected"
+                                                : ""
+                                        }`}
+                                    ></div>
+                                </div>
+                                <span>As a Trainer</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="signup-terms-wrapper">
