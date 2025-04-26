@@ -125,7 +125,7 @@ function RegisterPage() {
                                         }`}
                                     ></div>
                                 </div>
-                                <span>As a User</span>
+                                <span style={{color:"white"}}>As a User</span>
                             </div>
                             <div
                                 className={`signup-user-type-option ${
@@ -142,7 +142,7 @@ function RegisterPage() {
                                         }`}
                                     ></div>
                                 </div>
-                                <span>As a Trainer</span>
+                                <span style={{color:"white"}}>As a Trainer</span>
                             </div>
                         </div>
                     </div>

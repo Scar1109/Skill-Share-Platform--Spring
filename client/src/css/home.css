@@ -243,16 +243,22 @@ button {
 
 .image-placeholder012 {
     width: 100%;
-    max-width: 500px;
-    height: 400px;
-    background-color: #2a2a2a;
+    max-width: 100%;
+    background-size: 150%;
+    height: 655px;
+    margin-right: -20%;
+    /* background-color: #2a2a2a; */
+    background-image: url('https://i.ibb.co/dJc3jp6F/new-image.png');
+    background-size: cover; /* or 'contain' depending on your needs */
+    background-position: center; /* centers the image */
+    background-repeat: no-repeat; /* prevents image from repeating */
     border-radius: 10px;
     position: relative;
     overflow: hidden;
 }
 
 .image-placeholder012::after {
-    content: "Image";
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
