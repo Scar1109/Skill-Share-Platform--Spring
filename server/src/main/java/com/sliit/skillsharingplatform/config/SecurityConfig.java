@@ -16,6 +16,7 @@ public class SecurityConfig {
                 authorizeRequests
                     .requestMatchers("/api/users").permitAll()  // Allow public access to /api/users
                     .requestMatchers("/api/posts/**").permitAll()  // Allow public access to all /api/posts endpoints
+                    .requestMatchers("/api/progress/**").permitAll()  // Allow public access to all /api/courses endpoints
                     .anyRequest().authenticated()  // Require authentication for all other requests
             )
             .oauth2Login();  // Enable OAuth2 login with Spring Security
