@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { Clock, Award, ChevronRight, Calendar, Dumbbell, Flame } from "lucide-react"
 import "../css/dashboard.css"

@@ -1,5 +1,3 @@
-"use client"
-
 import { Home, Calendar, Dumbbell, User, BarChart2, Settings, LogOut, Film, Plus } from "lucide-react"
 import "../css/sidebar.css"
 
@@ -67,13 +65,6 @@ export default function Sidebar({ activeView, setActiveView }) {
 
       {/* User */}
       <div className="sidebar-user">
-        <div className="user-info">
-          <div className="user-avatar"></div>
-          <div>
-            <p className="user-name">Iike Savran</p>
-            <p className="user-role">Pro Member</p>
-          </div>
-        </div>
         <div className="user-actions">
           <button className="user-action-btn">
             <Settings size={18} className="action-icon" />
