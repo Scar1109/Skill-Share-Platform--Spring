@@ -12,7 +12,7 @@ export default function Sidebar({ activeView, setActiveView }) {
 
   // New instructor menu items
   const instructorItems = [
-    { id: "manage-courses", label: "Manage Courses", icon: Film },
+    { id: "workout-plan", label: "Manage Courses", icon: Film },
     { id: "add-course-video", label: "Add Course Video", icon: Plus },
   ]
 
