@@ -25,6 +25,19 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- File Upload Support -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        
+        <!-- Spring Boot Starter for File Uploading -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Spring Boot OAuth2 Client for handling OAuth2 login (Google, Facebook, etc.) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

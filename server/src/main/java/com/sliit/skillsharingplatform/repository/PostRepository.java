@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PostRepository extends MongoRepository<Post, String> {
-    List<Post> findByUserId(String userId);  // Get posts by userId
-    Optional<Post> findById(String id);  // Get a post by its ID
+    List<Post> findByUserId(String userId);
+    Optional<Post> findById(String id);
+    List<Post> findByCategory(String category);
+    List<Post> findByTitleContainingIgnoreCase(String title);
 }
