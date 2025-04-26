@@ -6,11 +6,13 @@ import LearningPlanPage from "./pages/LearningPlanPage";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
+import NavBar from "./components/NavBar";
 
 function App() {
     return (
-        <BrowserRouter>
+        <BrowserRouter> {/* Ensure BrowserRouter wraps everything */}
             <div className="App">
+                <NavBar /> {/* Include the NavBar here so it appears on all pages */}
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/login" element={<LoginPage />} />
