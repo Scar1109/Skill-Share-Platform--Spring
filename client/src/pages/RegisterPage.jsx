@@ -1,9 +1,8 @@
 import { useState } from "react";
-import Link from "next/link";
 import { EyeOffIcon, EyeIcon } from "lucide-react";
-import("../css/register.css");
+import "../css/register.css";
 
-export default function SignupForm() {
+function RegisterPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [agreed, setAgreed] = useState(false);
@@ -113,16 +112,13 @@ export default function SignupForm() {
                         </label>
                         <p className="signup-terms-text">
                             I agree to all the{" "}
-                            <Link href="/terms" className="signup-terms-link">
+                            <a href="/terms" className="signup-terms-link">
                                 Terms
-                            </Link>{" "}
+                            </a>{" "}
                             and{" "}
-                            <Link
-                                href="/privacy"
-                                className="signup-privacy-link"
-                            >
+                            <a href="/privacy" className="signup-privacy-link">
                                 Privacy Policies
-                            </Link>
+                            </a>
                         </p>
                     </div>
 
@@ -130,9 +126,9 @@ export default function SignupForm() {
 
                     <p className="signup-login-text">
                         Already have an account?{" "}
-                        <Link href="/login" className="signup-login-link">
+                        <a href="/login" className="signup-login-link">
                             Login
-                        </Link>
+                        </a>
                     </p>
 
                     <div className="signup-divider">
@@ -173,3 +169,5 @@ export default function SignupForm() {
         </div>
     );
 }
+
+export default RegisterPage;
