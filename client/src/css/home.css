@@ -248,14 +248,15 @@ button {
     height: 655px;
     margin-right: -20%;
     /* background-color: #2a2a2a; */
-    background-image: url('https://i.ibb.co/dJc3jp6F/new-image.png');
-    background-size: cover; /* or 'contain' depending on your needs */
-    background-position: center; /* centers the image */
-    background-repeat: no-repeat; /* prevents image from repeating */
+    background-image: url('../assets/cover-image.png'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
     border-radius: 10px;
     position: relative;
     overflow: hidden;
 }
+
 
 .image-placeholder012::after {
     content: "";
