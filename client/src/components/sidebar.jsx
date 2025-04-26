@@ -22,8 +22,6 @@ export default function Sidebar({ activeView, setActiveView }) {
     <div className="sidebar">
       {/* Logo */}
       <div className="sidebar-logo">
-        <h1 className="logo-text">Flowin</h1>
-        <p className="logo-subtext">Fitness Tracker</p>
       </div>
 
       {/* Navigation */}
