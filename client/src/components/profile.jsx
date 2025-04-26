@@ -1,4 +1,3 @@
-"use client"
 import { BarChart2, Clock, Award, Calendar, Settings, Edit } from "lucide-react"
 import "../css/profile.css"
 
