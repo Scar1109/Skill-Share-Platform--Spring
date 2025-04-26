@@ -1,6 +1,6 @@
 "use client"
 
-import { Home, Calendar, Dumbbell, User, BarChart2, Settings, LogOut } from "lucide-react"
+import { Home, Calendar, Dumbbell, User, BarChart2, Settings, LogOut, Film, Plus } from "lucide-react"
 import "../css/sidebar.css"
 
 export default function Sidebar({ activeView, setActiveView }) {
@@ -10,6 +10,12 @@ export default function Sidebar({ activeView, setActiveView }) {
     { id: "workouts", label: "Workouts", icon: Dumbbell },
     { id: "profile", label: "Profile", icon: User },
     { id: "stats", label: "Statistics", icon: BarChart2 },
+  ]
+
+  // New instructor menu items
+  const instructorItems = [
+    { id: "manage-courses", label: "Manage Courses", icon: Film },
+    { id: "add-course-video", label: "Add Course Video", icon: Plus },
   ]
 
   return (
@@ -39,6 +45,27 @@ export default function Sidebar({ activeView, setActiveView }) {
           })}
         </ul>
       </nav>
+
+      {/* Instructor Section */}
+      <div className="sidebar-section">
+        <h2 className="section-title">Instructor</h2>
+        <ul className="nav-list">
+          {instructorItems.map((item) => {
+            const Icon = item.icon
+            return (
+              <li key={item.id}>
+                <button
+                  onClick={() => setActiveView(item.id)}
+                  className={`nav-item ${activeView === item.id ? "active" : ""}`}
+                >
+                  <Icon size={20} className="nav-icon" />
+                  <span>{item.label}</span>
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
 
       {/* User */}
       <div className="sidebar-user">
