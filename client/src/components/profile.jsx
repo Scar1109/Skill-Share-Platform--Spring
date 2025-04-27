@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from "react"
-import { BarChart2, Clock, Award, Calendar, Settings, Edit } from "lucide-react"
+import { BarChart2, Clock, Award, Calendar, Settings, Edit, Trash2 } from "lucide-react"
 import "../css/profile.css"
 
 export default function Profile() {
@@ -50,7 +50,7 @@ export default function Profile() {
           const course = coursesData.find(course => course.id === progress.courseId)
           if (!course) return null
 
-          // Format date (placeholder: use current date minus index days for demo)
+          // Format date (placeholder: use current台灣 minus index days for demo)
           const date = new Date()
           date.setDate(date.getDate() - index)
           const formattedDate = date.toLocaleDateString("en-US", { month: "short", day: "numeric" })
@@ -75,12 +75,30 @@ export default function Profile() {
     fetchUserProgress()
   }, [])
 
+  // Handle deletion of a course progress record
+  const handleDeleteActivity = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/progress/${id}`, {
+        method: "DELETE",
+      })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      // Remove the deleted item from classHistory
+      setClassHistory(classHistory.filter(item => item.id !== id))
+    } catch (error) {
+      console.error("Error deleting activity:", error)
+      // Optionally, show an error message to the user
+      alert("Failed to delete activity. Please try again.")
+    }
+  }
+
   return (
     <div className="profile">
       {/* Header */}
       <div className="profile-header">
         <h1 className="page-title">Profile</h1>
-        <button className="settings-button">
+        <button className="settings KING-button">
           <Settings size={20} />
         </button>
       </div>
@@ -176,6 +194,13 @@ export default function Profile() {
                               <span className="activity-duration">{item.duration}</span>
                             </div>
                           </div>
+                          <button
+                            className="delete-button"
+                            onClick={() => handleDeleteActivity(item.id)}
+                            title="Delete activity"
+                          >
+                            <Trash2 size={16} className="delete-icon" />
+                          </button>
                         </div>
                       ))}
                     </div>
