@@ -14,10 +14,10 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
-                    .requestMatchers("/api/users").permitAll()  // Allow public access to /api/users
-                    .requestMatchers("/api/posts/**").permitAll()  // Allow public access to all /api/posts endpoints
+                    .requestMatchers("/api/users").permitAll()
+                    .requestMatchers("/api/posts/**").permitAll()
                     .requestMatchers("/api/courses/**").permitAll()
-                    .requestMatchers("/api/progress/**").permitAll()  // Allow public access to all /api/courses endpoints
+                    .requestMatchers("/api/progress/**").permitAll()
                     .requestMatchers("/api/videos/**").permitAll()
                     .requestMatchers("/api/comments/**").permitAll()
                     .requestMatchers("/api/courses/upload-image").permitAll()
