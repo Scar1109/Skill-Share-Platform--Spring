@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.List;  // <-- Add this import
 
 @RestController
 @RequestMapping("/api/progress")
@@ -43,6 +43,18 @@ public class ProgressController {
     public ResponseEntity<CourseProgress> createOrUpdateProgress(@RequestBody CourseProgress courseProgress) {
         CourseProgress createdProgress = progressService.createOrUpdateProgress(courseProgress);
         return new ResponseEntity<>(createdProgress, HttpStatus.CREATED);
+    }
+
+    // PUT request to update completedVideos array (mark as complete)
+    @PutMapping("/{progressId}/complete/{videoIndex}")
+    public ResponseEntity<CourseProgress> markVideoAsComplete(@PathVariable("progressId") String progressId,
+                                                              @PathVariable("videoIndex") Integer videoIndex) {
+        try {
+            CourseProgress updatedProgress = progressService.updateProgress(progressId, videoIndex);
+            return new ResponseEntity<>(updatedProgress, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     // Delete course progress by ID
