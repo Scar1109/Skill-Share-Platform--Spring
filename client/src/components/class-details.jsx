@@ -327,7 +327,7 @@ export default function ClassDetails({ classData, onBack }) {
                   onClick={() => handleVideoSelect(index)}
                 >
                   <div className="video-item-thumbnail">
-                    <img src={video.thumbnail || "/placeholder.svg"} alt={video.title} />
+                    <img src={video.thumbnail || "../assets/one-hour-gym-header-image.jpg"} alt={video.title} />
                     {completedVideos.includes(index) && (
                       <div className="completed-overlay">
                         <CheckCircle size={20} />
