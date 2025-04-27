@@ -1,7 +1,12 @@
+"use client"
+import { useState, useEffect } from "react"
 import { BarChart2, Clock, Award, Calendar, Settings, Edit } from "lucide-react"
 import "../css/profile.css"
 
 export default function Profile() {
+  const [classHistory, setClassHistory] = useState([])
+  const [loading, setLoading] = useState(true)
+
   const stats = {
     calories: 1849,
     minutes: 319,
@@ -9,21 +14,66 @@ export default function Profile() {
     streak: 12,
   }
 
-  const classHistory = [
-    { id: 1, day: "Apr 22", name: "Sun Salutations and Handstand", duration: "30 min", level: "Beginner" },
-    { id: 2, day: "Apr 21", name: "Morning Flow", duration: "25 min", level: "Beginner" },
-    { id: 3, day: "Apr 18", name: "Power Yoga", duration: "45 min", level: "Intermediate" },
-    { id: 4, day: "Apr 15", name: "Gentle Stretch", duration: "20 min", level: "Beginner" },
-    { id: 5, day: "Apr 12", name: "Core Strength", duration: "35 min", level: "Intermediate" },
-    { id: 6, day: "Apr 10", name: "Balance Practice", duration: "40 min", level: "Advanced" },
-  ]
-
   const achievements = [
     { id: 1, name: "Early Bird", description: "Complete 5 morning workouts", progress: 80 },
     { id: 2, name: "Consistency King", description: "Workout for 10 days in a row", progress: 100 },
     { id: 3, name: "Flexibility Master", description: "Complete 15 flexibility classes", progress: 60 },
     { id: 4, name: "Strength Builder", description: "Complete 20 strength workouts", progress: 45 },
   ]
+
+  // Mock current user ID (replace with actual user ID from auth context)
+  const currentUserId = "user123"
+
+  // Fetch course progress and course details
+  useEffect(() => {
+    async function fetchUserProgress() {
+      try {
+        // Fetch all course progress records
+        const progressResponse = await fetch("http://localhost:8080/api/progress")
+        if (!progressResponse.ok) {
+          throw new Error(`HTTP error! status: ${progressResponse.status}`)
+        }
+        const progressData = await progressResponse.json()
+
+        // Filter progress records for the current user
+        const userProgress = progressData.filter(progress => progress.userId === currentUserId)
+
+        // Fetch all courses
+        const coursesResponse = await fetch("http://localhost:8080/api/courses")
+        if (!coursesResponse.ok) {
+          throw new Error(`HTTP error! status: ${coursesResponse.status}`)
+        }
+        const coursesData = await coursesResponse.json()
+
+        // Map progress to course details
+        const history = userProgress.map((progress, index) => {
+          const course = coursesData.find(course => course.id === progress.courseId)
+          if (!course) return null
+
+          // Format date (placeholder: use current date minus index days for demo)
+          const date = new Date()
+          date.setDate(date.getDate() - index)
+          const formattedDate = date.toLocaleDateString("en-US", { month: "short", day: "numeric" })
+
+          return {
+            id: progress.id,
+            day: formattedDate,
+            name: course.courseTitle || "Untitled Course",
+            duration: `${course.durationMinutes || 0} min`,
+            level: course.level || "Unknown",
+          }
+        }).filter(item => item !== null)
+
+        setClassHistory(history)
+      } catch (error) {
+        console.error("Error fetching user progress:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchUserProgress()
+  }, [])
 
   return (
     <div className="profile">
@@ -107,23 +157,29 @@ export default function Profile() {
               <div className="activity-tab">
                 <div className="content-card">
                   <h3 className="content-title">Recent Activity</h3>
-                  <div className="activity-list">
-                    {classHistory.map((item) => (
-                      <div key={item.id} className="activity-item">
-                        <div className="activity-date">
-                          <p className="date-month">{item.day.split(" ")[0]}</p>
-                          <p className="date-day">{item.day.split(" ")[1]}</p>
-                        </div>
-                        <div className="activity-details">
-                          <p className="activity-name">{item.name}</p>
-                          <div className="activity-meta">
-                            <span className={`activity-level ${item.level.toLowerCase()}`}>{item.level}</span>
-                            <span className="activity-duration">{item.duration}</span>
+                  {loading ? (
+                    <div>Loading...</div>
+                  ) : classHistory.length === 0 ? (
+                    <div>No recent activity found.</div>
+                  ) : (
+                    <div className="activity-list">
+                      {classHistory.map((item) => (
+                        <div key={item.id} className="activity-item">
+                          <div className="activity-date">
+                            <p className="date-month">{item.day.split(" ")[0]}</p>
+                            <p className="date-day">{item.day.split(" ")[1]}</p>
+                          </div>
+                          <div className="activity-details">
+                            <p className="activity-name">{item.name}</p>
+                            <div className="activity-meta">
+                              <span className={`activity-level ${item.level.toLowerCase()}`}>{item.level}</span>
+                              <span className="activity-duration">{item.duration}</span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
 
