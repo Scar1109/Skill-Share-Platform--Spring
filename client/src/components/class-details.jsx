@@ -1,19 +1,6 @@
-"use client"
-
+import React from "react"
 import { useState, useEffect } from "react"
-import {
-  ChevronLeft,
-  Heart,
-  Calendar,
-  Share2,
-  Bookmark,
-  Play,
-  Clock,
-  User,
-  CheckCircle,
-  ChevronRight,
-  BarChart2,
-} from "lucide-react"
+import { ChevronLeft, Heart, Calendar, Share2, Bookmark, Play, Clock, User, CheckCircle, ChevronRight, BarChart2, Edit, Trash2, Send } from 'lucide-react'
 import "../css/class-details.css"
 
 export default function ClassDetails({ classData, onBack }) {
@@ -22,6 +9,26 @@ export default function ClassDetails({ classData, onBack }) {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0)
   const [completedVideos, setCompletedVideos] = useState([])
   const [overallProgress, setOverallProgress] = useState(0)
+  
+  // Comment states
+  const [comments, setComments] = useState([])
+  const [newComment, setNewComment] = useState("")
+  const [editingComment, setEditingComment] = useState(null)
+  const [editText, setEditText] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  
+  // Mock user ID - in a real app, this would come from authentication
+  const currentUserId = "user123"
+
+  // Mock class data - in a real app, this would come from props or API
+  const mockClassData = {
+    id: 143443533534,
+    title: "Yoga for Beginners",
+    level: "Beginner",
+    duration: "30 min",
+    instructor: "Jane Doe",
+    description: "A gentle introduction to yoga, focusing on basic poses and breathing techniques.",
+  }
 
   // Mock video series data
   const videoSeries = [
@@ -67,6 +74,124 @@ export default function ClassDetails({ classData, onBack }) {
     const progress = (completedVideos.length / videoSeries.length) * 100
     setOverallProgress(progress)
   }, [completedVideos])
+  
+  // Fetch comments when component mounts or courseId changes
+  useEffect(() => {
+    if (mockClassData && mockClassData.id) {
+      fetchComments(mockClassData.id)
+    }
+  }, [classData.id])
+  
+  // Fetch comments from the API
+  const fetchComments = async (courseId) => {
+    setIsLoading(true)
+    try {
+      const response = await fetch(`http://localhost:8080/api/comments/course/${courseId}`)
+      if (response.ok) {
+        const data = await response.json()
+        setComments(data)
+      } else {
+        console.error("Failed to fetch comments")
+      }
+    } catch (error) {
+      console.error("Error fetching comments:", error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+  
+  // Add a new comment
+  const handleAddComment = async (e) => {
+    e.preventDefault()
+    if (!newComment.trim()) return
+    
+    try {
+      const commentData = {
+        courseId: mockClassData.id,
+        userId: currentUserId,
+        comment: newComment
+      }
+      
+      const response = await fetch('http://localhost:8080/api/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(commentData)
+      })
+      
+      if (response.ok) {
+        const createdComment = await response.json()
+        setComments([...comments, createdComment])
+        setNewComment("")
+      } else {
+        console.error("Failed to add comment")
+      }
+    } catch (error) {
+      console.error("Error adding comment:", error)
+    }
+  }
+  
+  // Delete a comment
+  const handleDeleteComment = async (commentId) => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/comments/${commentId}`, {
+        method: 'DELETE'
+      })
+      
+      if (response.ok) {
+        setComments(comments.filter(comment => comment.id !== commentId))
+      } else {
+        console.error("Failed to delete comment")
+      }
+    } catch (error) {
+      console.error("Error deleting comment:", error)
+    }
+  }
+  
+  // Start editing a comment
+  const handleStartEdit = (comment) => {
+    setEditingComment(comment.id)
+    setEditText(comment.comment)
+  }
+  
+  // Cancel editing
+  const handleCancelEdit = () => {
+    setEditingComment(null)
+    setEditText("")
+  }
+  
+  // Save edited comment
+  const handleSaveEdit = async (commentId) => {
+    if (!editText.trim()) return
+    
+    try {
+      const commentData = {
+        comment: editText
+      }
+      
+      const response = await fetch(`http://localhost:8080/api/comments/${commentId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(commentData)
+      })
+      
+      if (response.ok) {
+        const updatedComment = await response.json()
+        setComments(comments.map(comment => 
+          comment.id === commentId ? updatedComment : comment
+        ))
+        setEditingComment(null)
+        setEditText("")
+      } else {
+        console.error("Failed to update comment")
+      }
+    } catch (error) {
+      console.error("Error updating comment:", error)
+    }
+  }
 
   const handleVideoComplete = () => {
     if (!completedVideos.includes(currentVideoIndex)) {
@@ -109,6 +234,12 @@ export default function ClassDetails({ classData, onBack }) {
       image: "/placeholder.svg?height=150&width=250",
     },
   ]
+
+  // Format date for comments
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' }
+    return new Date(dateString).toLocaleDateString(undefined, options)
+  }
 
   return (
     <div className="class-details">
@@ -250,21 +381,102 @@ export default function ClassDetails({ classData, onBack }) {
             </div>
           </div>
 
-          {/* Instructor */}
-          <div className="instructor-section">
-            <h2 className="section-title">About the Instructor</h2>
-            <div className="instructor-card">
-              <div className="instructor-profile">
-                <div className="instructor-avatar"></div>
-                <div>
-                  <h3 className="instructor-name">{classData.instructor}</h3>
-                  <p className="instructor-role">Yoga & Fitness Instructor</p>
-                  <p className="instructor-bio">
-                    Experienced instructor specializing in yoga and mindfulness practices. Certified in Hatha, Vinyasa,
-                    and Restorative yoga with over 5 years of teaching experience.
-                  </p>
+          {/* Comments Section */}
+          <div className="comments-section">
+            <h2 className="section-title">Comments</h2>
+            
+            {/* Add new comment form */}
+            <div className="comment-form-container">
+              <form onSubmit={handleAddComment} className="comment-form">
+                <div className="comment-input-container">
+                  <textarea 
+                    className="comment-input"
+                    placeholder="Add a comment..."
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    rows={3}
+                  />
                 </div>
-              </div>
+                <div className="comment-form-actions">
+                  <button type="submit" className="comment-submit-button" disabled={!newComment.trim()}>
+                    <Send size={16} className="comment-submit-icon" />
+                    Post Comment
+                  </button>
+                </div>
+              </form>
+            </div>
+            
+            {/* Comments list */}
+            <div className="comments-list">
+              {isLoading ? (
+                <div className="comments-loading">Loading comments...</div>
+              ) : comments.length === 0 ? (
+                <div className="no-comments">No comments yet. Be the first to comment!</div>
+              ) : (
+                comments.map((comment) => (
+                  <div key={comment.id} className="comment-item">
+                    <div className="comment-avatar">
+                      <div className="comment-avatar-placeholder">
+                        {comment.userId.substring(0, 2).toUpperCase()}
+                      </div>
+                    </div>
+                    <div className="comment-content">
+                      <div className="comment-header">
+                        <div className="comment-user-info">
+                          <span className="comment-username">User {comment.userId}</span>
+                          <span className="comment-date">{formatDate(new Date())}</span>
+                        </div>
+                        
+                        {/* Only show edit/delete for current user's comments */}
+                        {comment.userId === currentUserId && (
+                          <div className="comment-actions">
+                            <button 
+                              className="comment-action-button"
+                              onClick={() => handleStartEdit(comment)}
+                            >
+                              <Edit size={14} />
+                            </button>
+                            <button 
+                              className="comment-action-button delete"
+                              onClick={() => handleDeleteComment(comment.id)}
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                      
+                      {editingComment === comment.id ? (
+                        <div className="comment-edit-container">
+                          <textarea
+                            className="comment-edit-input"
+                            value={editText}
+                            onChange={(e) => setEditText(e.target.value)}
+                            rows={3}
+                          />
+                          <div className="comment-edit-actions">
+                            <button 
+                              className="comment-edit-button cancel"
+                              onClick={handleCancelEdit}
+                            >
+                              Cancel
+                            </button>
+                            <button 
+                              className="comment-edit-button save"
+                              onClick={() => handleSaveEdit(comment.id)}
+                              disabled={!editText.trim()}
+                            >
+                              Save
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <p className="comment-text">{comment.comment}</p>
+                      )}
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

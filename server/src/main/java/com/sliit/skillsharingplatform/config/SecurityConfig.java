@@ -19,6 +19,7 @@ public class SecurityConfig {
                     .requestMatchers("/api/courses/**").permitAll()
                     .requestMatchers("/api/progress/**").permitAll()  // Allow public access to all /api/courses endpoints
                     .requestMatchers("/api/videos/**").permitAll()
+                    .requestMatchers("/api/comments/**").permitAll()
                     .requestMatchers("/api/courses/upload-image").permitAll()
                     .anyRequest().authenticated()  // Require authentication for all other requests
             )
