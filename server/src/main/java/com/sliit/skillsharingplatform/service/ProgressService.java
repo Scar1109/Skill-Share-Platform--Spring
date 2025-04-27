@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProgressService {
@@ -32,6 +33,29 @@ public class ProgressService {
     // Create or update course progress
     public CourseProgress createOrUpdateProgress(CourseProgress courseProgress) {
         return progressRepository.save(courseProgress);
+    }
+
+    // Update course progress by adding a completed video
+    public CourseProgress updateProgress(String progressId, Integer videoIndex) {
+        Optional<CourseProgress> existingProgressOpt = progressRepository.findById(progressId);
+
+        if (existingProgressOpt.isPresent()) {
+            CourseProgress existingProgress = existingProgressOpt.get();
+
+            // Add the videoIndex to the completedVideos list if not already completed
+            if (!existingProgress.getCompletedVideos().contains(videoIndex)) {
+                existingProgress.getCompletedVideos().add(videoIndex);
+            }
+
+            // Recalculate overall progress
+            double progress = (double) existingProgress.getCompletedVideos().size() / 5 * 100;  // Assuming 5 videos in total
+            existingProgress.setOverallProgress(progress);
+
+            // Save the updated progress back to the repository
+            return progressRepository.save(existingProgress);
+        } else {
+            throw new RuntimeException("Progress not found");
+        }
     }
 
     // Delete course progress by ID
