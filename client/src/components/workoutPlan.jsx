@@ -90,20 +90,66 @@ function WorkoutPlan({ onClassSelect }) {
         }
     };
 
-    // Handle image upload
-    const handleImageUpload = (e) => {
+    // Handle image upload via backend
+    const handleImageUpload = async (e) => {
         const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImagePreview(reader.result);
-                setFormData((prev) => ({
-                    ...prev,
-                    thumbnailFile: file,
-                    thumbnail: reader.result,
-                }));
-            };
-            reader.readAsDataURL(file);
+        if (!file) return;
+
+        // Validate file type and size
+        const validTypes = [
+            "image/jpeg",
+            "image/png",
+            "image/gif",
+            "image/bmp",
+        ];
+        if (!validTypes.includes(file.type)) {
+            setError("Please upload a valid image (JPEG, PNG, GIF, BMP)");
+            return;
+        }
+        if (file.size > 32 * 1024 * 1024) {
+            setError("Image size must be less than 32MB");
+            return;
+        }
+
+        // Create local preview
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImagePreview(reader.result);
+            setFormData((prev) => ({
+                ...prev,
+                thumbnailFile: file,
+            }));
+        };
+        reader.readAsDataURL(file);
+
+        // Upload to backend
+        try {
+            const formData = new FormData();
+            formData.append("image", file);
+
+            const response = await fetch(
+                "http://localhost:8080/api/courses/upload-image",
+                {
+                    method: "POST",
+                    body: formData,
+                }
+            );
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(
+                    `Image upload failed! Status: ${response.status}, Message: ${errorText}`
+                );
+            }
+
+            const imageUrl = await response.text();
+            setFormData((prev) => ({
+                ...prev,
+                thumbnail: imageUrl, // Store backend-provided ImgBB URL
+            }));
+        } catch (error) {
+            console.error("Error uploading image:", error);
+            setError("Failed to upload image: " + error.message);
         }
     };
 
@@ -120,7 +166,7 @@ function WorkoutPlan({ onClassSelect }) {
                 durationMinutes: Number(formData.durationMinutes),
                 level: formData.level,
                 targetCalery: Number(formData.targetCalery),
-                thumbnail: formData.thumbnail,
+                thumbnail: formData.thumbnail, // ImgBB URL or null
                 category: formData.category,
             };
 
@@ -164,7 +210,7 @@ function WorkoutPlan({ onClassSelect }) {
                 durationMinutes: Number(formData.durationMinutes),
                 level: formData.level,
                 targetCalery: Number(formData.targetCalery),
-                thumbnail: formData.thumbnail,
+                thumbnail: formData.thumbnail, // ImgBB URL or null
                 category: formData.category,
             };
 
@@ -186,6 +232,7 @@ function WorkoutPlan({ onClassSelect }) {
                 );
             }
 
+            const updatedPlan = await response.json();
             fetchPlans();
             setShowEditModal(false);
             resetForm();
