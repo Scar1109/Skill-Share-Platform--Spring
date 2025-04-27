@@ -232,8 +232,15 @@
 
 .class-image {
     position: relative;
-    height: 12rem;
-    width: 100%;
+    height: 20rem; /* Fixed height */
+    width: 23rem; /* Fixed width */
+    overflow: hidden; /* Ensures no part of the image is outside the div */
+}
+
+.class-image img {
+    width: 100%; /* Ensure the image takes the full width of the container */
+    height: 100%; /* Ensure the image takes the full height of the container */
+    object-fit: cover; /* Ensure the image covers the container without distortion */
 }
 
 .class-content {
@@ -334,11 +341,18 @@
 
 .recommended-image {
     position: relative;
-    height: 9rem;
-    width: 100%;
+    width: 17rem;  /* Set the fixed width of the container */
+    height: 17rem; /* Set the fixed height of the container */
+    overflow: hidden; /* Hide any overflow if the image is bigger than the container */
 }
 
+.recommended-image img {
+    width: 100%;  /* Make the image take up the full width of the container */
+    height: 100%; /* Make the image take up the full height of the container */
+    object-fit: cover; /* Ensure the image covers the container without distortion, but might crop */
+}
 .duration-badge {
+    margin-right: 70%;
     position: absolute;
     bottom: 0.5rem;
     right: 0.5rem;
@@ -347,6 +361,10 @@
     font-size: 0.75rem;
     padding: 0.25rem 0.5rem;
     border-radius: 0.375rem;
+    height: 2rem;  /* Set a fixed height */
+    display: flex;  /* Use flexbox to center the content vertically */
+    align-items: center;  /* Center content vertically */
+    justify-content: center;
 }
 
 .recommended-content {
