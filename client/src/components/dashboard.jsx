@@ -21,7 +21,7 @@ export default function Dashboard({ onClassSelect }) {
       title: "Hatha Basics",
       level: "Beginner",
       completed: 27,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "https://i.ibb.co/YBrs1Xk8/pexels-anush-1229356.jpg",
       duration: "30 min",
       instructor: "Jane Brunetti",
       description:
@@ -32,7 +32,7 @@ export default function Dashboard({ onClassSelect }) {
       title: "Energizing Morning Flow",
       level: "Beginner",
       completed: 15,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "https://i.ibb.co/SXgcw3sR/new-image-2.png",
       duration: "25 min",
       instructor: "Jane Brunetti",
       description:
@@ -43,7 +43,7 @@ export default function Dashboard({ onClassSelect }) {
       title: "Balance",
       level: "Moderate",
       completed: 5,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "https://i.ibb.co/YBrs1Xk8/pexels-anush-1229356.jpg",
       duration: "40 min",
       instructor: "Mike Chen",
       description:
@@ -54,7 +54,7 @@ export default function Dashboard({ onClassSelect }) {
       title: "Flexibility",
       level: "Beginner",
       completed: 10,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "https://i.ibb.co/SXgcw3sR/new-image-2.png",
       duration: "35 min",
       instructor: "Sarah Johnson",
       description: "Focus on increasing your flexibility and range of motion with gentle stretches and holds.",
