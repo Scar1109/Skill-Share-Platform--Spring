@@ -128,7 +128,7 @@ const HomePage = () => {
             {/* Popular Skills Section - Now with dynamic data and level colors */}
             <section className="skills-section345" id="skills">
                 <div className="section-header678">
-                    <h2 className="section-title901">Popular Skills</h2>
+                    <h2 className="section-title901">Popular Workout Plans</h2>
                     <p className="section-subtitle234">Discover trending fitness skills being shared in our community</p>
                 </div>
                 <div className="skills-grid567">
