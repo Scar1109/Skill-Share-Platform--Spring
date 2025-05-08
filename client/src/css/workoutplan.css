@@ -233,7 +233,7 @@
 .class-image {
     position: relative;
     height: 20rem; /* Fixed height */
-    width: 23rem; /* Fixed width */
+    width: 24rem; /* Fixed width */
     overflow: hidden; /* Ensures no part of the image is outside the div */
 }
 
@@ -341,7 +341,7 @@
 
 .recommended-image {
     position: relative;
-    width: 17rem;  /* Set the fixed width of the container */
+    width: 18rem;  /* Set the fixed width of the container */
     height: 17rem; /* Set the fixed height of the container */
     overflow: hidden; /* Hide any overflow if the image is bigger than the container */
 }
