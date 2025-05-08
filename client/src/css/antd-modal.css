@@ -1,0 +1,206 @@
+/* Custom styles to make Ant Design components match the original UI */
+
+/* Override Ant Design modal styles to match the original UI */
+.workout-plan-modal .ant-modal-content {
+  background-color: var(--color-card-bg, #1f2937);
+  border-radius: var(--border-radius, 8px);
+  padding: 0;
+  overflow: hidden;
+}
+
+.workout-plan-modal .ant-modal-header {
+  background-color: var(--color-card-bg, #1f2937);
+  border-bottom: 1px solid var(--color-card-border, #374151);
+  padding: 1rem;
+  margin: 0;
+}
+
+.workout-plan-modal .ant-modal-title {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.workout-plan-modal .ant-modal-close {
+  color: var(--color-text-secondary, #9ca3af);
+}
+
+.workout-plan-modal .ant-modal-close:hover {
+  color: white;
+}
+
+.workout-plan-modal .ant-modal-body {
+  padding: 1rem;
+}
+
+/* Form styles */
+.workout-plan-modal .ant-form-item-label > label {
+  color: white;
+  font-size: 0.875rem;
+}
+
+.workout-plan-modal .ant-input,
+.workout-plan-modal .ant-input-number,
+.workout-plan-modal .ant-select-selector,
+.workout-plan-modal .ant-input-number-input,
+.workout-plan-modal .ant-select-selection-item {
+  background-color: var(--color-gray-800, #1f2937) !important;
+  border: 1px solid var(--color-card-border, #374151) !important;
+  color: white !important;
+  border-radius: 0.25rem !important;
+}
+
+.workout-plan-modal .ant-input:focus,
+.workout-plan-modal .ant-input-number:focus,
+.workout-plan-modal .ant-select-selector:focus,
+.workout-plan-modal .ant-input-number-focused,
+.workout-plan-modal .ant-select-focused .ant-select-selector {
+  border-color: var(--color-green-primary, #22c55e) !important;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2) !important;
+}
+
+/* Button styles */
+.workout-plan-modal .submit-btn {
+  background-color: var(--color-green-primary, #22c55e) !important;
+  color: black !important;
+  border: none !important;
+  border-radius: 0.25rem !important;
+  height: auto !important;
+  padding: 0.5rem 1rem !important;
+}
+
+.workout-plan-modal .cancel-btn {
+  background-color: transparent !important;
+  border: 1px solid var(--color-card-border, #374151) !important;
+  color: white !important;
+  border-radius: 0.25rem !important;
+  height: auto !important;
+  padding: 0.5rem 1rem !important;
+}
+
+.workout-plan-modal .submit-btn:hover {
+  background-color: var(--color-green-dark, #16a34a) !important;
+}
+
+.workout-plan-modal .cancel-btn:hover {
+  background-color: var(--color-gray-700, #374151) !important;
+}
+
+/* Upload button */
+.workout-plan-modal .upload-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--color-gray-800, #1f2937);
+  color: white;
+  border: 1px solid var(--color-card-border, #374151);
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.workout-plan-modal .upload-btn:hover {
+  background-color: var(--color-gray-700, #374151);
+}
+
+/* Image preview */
+.workout-plan-modal .image-preview {
+  width: 100%;
+  height: 150px;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  border: 1px solid var(--color-card-border, #374151);
+  margin-bottom: 1rem;
+}
+
+.workout-plan-modal .image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Form layout */
+.workout-plan-modal .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.workout-plan-modal .form-row .form-group {
+  margin-bottom: 0;
+}
+
+.workout-plan-modal .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Delete confirmation modal */
+.delete-confirm-modal .ant-modal-content {
+  background-color: var(--color-card-bg, #1f2937);
+  border-radius: var(--border-radius, 8px);
+}
+
+.delete-confirm-modal .ant-modal-header {
+  background-color: var(--color-card-bg, #1f2937);
+  border-bottom: 1px solid var(--color-card-border, #374151);
+}
+
+.delete-confirm-modal .ant-modal-title {
+  color: #ef4444;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.delete-confirm-modal .ant-modal-close {
+  color: var(--color-text-secondary, #9ca3af);
+}
+
+.delete-confirm-modal .ant-modal-body {
+  padding: 1rem;
+  text-align: center;
+}
+
+.delete-confirm-modal .ant-modal-footer {
+  border-top: 1px solid var(--color-card-border, #374151);
+  padding: 1rem;
+}
+
+.delete-confirm-modal .delete-btn-modal {
+  background-color: #ef4444 !important;
+  color: white !important;
+}
+
+.delete-confirm-modal .delete-btn-modal:hover {
+  background-color: #dc2626 !important;
+}
+
+/* Error message */
+.error-message {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: var(--color-red, #ef4444);
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border-radius: 0.25rem;
+  border: 1px solid var(--color-red, #ef4444);
+  font-size: 0.875rem;
+}
+
+/* Animation for modal */
+.ant-modal {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
