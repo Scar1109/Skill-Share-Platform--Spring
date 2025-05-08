@@ -42,8 +42,7 @@
 .workout-plan-modal .ant-input,
 .workout-plan-modal .ant-input-number,
 .workout-plan-modal .ant-select-selector,
-.workout-plan-modal .ant-input-number-input,
-.workout-plan-modal .ant-select-selection-item {
+.workout-plan-modal .ant-input-number-input {
   background-color: var(--color-gray-800, #1f2937) !important;
   border: 1px solid var(--color-card-border, #374151) !important;
   color: white !important;
@@ -55,13 +54,13 @@
 .workout-plan-modal .ant-select-selector:focus,
 .workout-plan-modal .ant-input-number-focused,
 .workout-plan-modal .ant-select-focused .ant-select-selector {
-  border-color: var(--color-green-primary, #22c55e) !important;
+  border-color: var(--color-green-primary, #922e2e) !important;
   box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2) !important;
 }
 
 /* Button styles */
 .workout-plan-modal .submit-btn {
-  background-color: var(--color-green-primary, #22c55e) !important;
+  background-color: var(--color-green-primary, #922e2e) !important;
   color: black !important;
   border: none !important;
   border-radius: 0.25rem !important;
@@ -79,7 +78,7 @@
 }
 
 .workout-plan-modal .submit-btn:hover {
-  background-color: var(--color-green-dark, #16a34a) !important;
+  background-color: var(--color-green-dark, #922e2e) !important;
 }
 
 .workout-plan-modal .cancel-btn:hover {
@@ -127,7 +126,7 @@
   gap: 1rem;
 }
 
-.workout-plan-modal .form-row .form-group {
+.workout-plan-modal .form-row .form-group1 {
   margin-bottom: 0;
 }
 
@@ -177,6 +176,35 @@
 .delete-confirm-modal .delete-btn-modal:hover {
   background-color: #dc2626 !important;
 }
+
+/* Input box style */
+.custom-select-dark .ant-select-selector {
+    background-color: #1f2937 !important;
+    color: #ffffff !important;
+    border-color: #4b5563 !important;
+  }
+  
+  /* Selected text color */
+  .custom-select-dark .ant-select-selection-item {
+    color: #ffffff !important;
+  }
+  
+  /* Make sure the dropdown background is dark */
+  .ant-select-dropdown {
+    background-color: #1f2937 !important;
+  }
+  
+  /* Dropdown options */
+  .ant-select-item {
+    background-color: #1f2937 !important;
+    color: #ffffff !important;
+  }
+  
+  /* Hover state for options */
+  .ant-select-item-option-active {
+    background-color: #374151 !important;
+  }
+  
 
 /* Error message */
 .error-message {

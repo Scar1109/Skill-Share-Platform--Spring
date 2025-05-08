@@ -311,13 +311,13 @@ function WorkoutPlan({ onClassSelect }) {
                             label="Instructor"
                             name="trainerUserId"
                             rules={[{ required: true, message: "Please enter an instructor" }]}
-                            className="form-group"
+                            className="form-group1"
                         >
                             <Input />
                         </Form.Item>
 
-                        <Form.Item label="Level" name="level" className="form-group">
-                            <Select>
+                        <Form.Item label="Level" name="level" className="form-group1">
+                            <Select className="custom-select-dark">
                                 <Option value="Beginner">Beginner</Option>
                                 <Option value="Moderate">Moderate</Option>
                                 <Option value="Intermediate">Intermediate</Option>
@@ -331,7 +331,7 @@ function WorkoutPlan({ onClassSelect }) {
                             label="Duration (minutes)"
                             name="durationMinutes"
                             rules={[{ required: true, message: "Please enter duration" }]}
-                            className="form-group"
+                            className="form-group1"
                         >
                             <InputNumber min={1} style={{ width: "100%" }} />
                         </Form.Item>
@@ -340,14 +340,14 @@ function WorkoutPlan({ onClassSelect }) {
                             label="Target Calories"
                             name="targetCalery"
                             rules={[{ required: true, message: "Please enter target calories" }]}
-                            className="form-group"
+                            className="form-group1"
                         >
                             <InputNumber min={0} step={0.1} style={{ width: "100%" }} />
                         </Form.Item>
                     </div>
 
                     <Form.Item label="Category" name="category">
-                        <Select>
+                        <Select className="custom-select-dark">
                             <Option value="Yoga">Yoga</Option>
                             <Option value="Pilates">Pilates</Option>
                             <Option value="Cardio">Cardio</Option>
