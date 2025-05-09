@@ -119,7 +119,7 @@ export default function Workouts({ onClassSelect }) {
             onClassSelect(workout);
         } else {
             // Otherwise navigate to the learning plan page with the course id
-            navigate(`/learning-plan/${workout.id}`);
+            navigate(`/learning-plans/${workout.id}`);
         }
     };
 
