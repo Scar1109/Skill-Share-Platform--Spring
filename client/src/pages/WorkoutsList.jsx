@@ -124,36 +124,39 @@ export default function Workouts({ onClassSelect }) {
     };
 
     return (
-        <div className="workouts-page">
+        <div className="workouts-page123">
             {/* Header */}
-            <div className="workouts-header">
-                <h1 className="page-title">Workouts</h1>
+            <div className="workouts-header456">
+                <h1 className="page-title789">Workouts</h1>
             </div>
 
             {/* Search and Filter */}
-            <div className="search-container">
-                <div className="search-input-wrapper">
-                    <Search className="search-icon" size={18} />
+            <div className="search-container012">
+                <div className="search-input-wrapper345">
+                    <Search className="search-icon678" size={18} />
                     <input
                         type="text"
                         placeholder="Search workouts, instructors..."
-                        className="search-input"
+                        className="search-input901"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
-                <button className="filter-button" onClick={toggleLevelFilter}>
+                <button
+                    className="filter-button234"
+                    onClick={toggleLevelFilter}
+                >
                     <Filter size={20} />
                 </button>
             </div>
 
             {/* Workout Categories */}
-            <div className="categories-tabs">
+            <div className="categories-tabs567">
                 {workoutCategories.map((category) => (
                     <button
                         key={category.id}
-                        className={`category-tab ${
-                            activeCategory === category.id ? "active" : ""
+                        className={`category-tab890 ${
+                            activeCategory === category.id ? "active123" : ""
                         }`}
                         onClick={() => handleCategoryChange(category.id)}
                     >
@@ -165,14 +168,14 @@ export default function Workouts({ onClassSelect }) {
             {/* Level Filter - Only shown when filter button is clicked */}
             {showLevelFilter && (
                 <div
-                    className="categories-tabs"
+                    className="categories-tabs567"
                     style={{ marginBottom: "1rem" }}
                 >
                     {levelOptions.map((level) => (
                         <button
                             key={level.id}
-                            className={`category-tab ${
-                                activeLevel === level.id ? "active" : ""
+                            className={`category-tab890 ${
+                                activeLevel === level.id ? "active123" : ""
                             }`}
                             onClick={() => handleLevelChange(level.id)}
                         >
@@ -184,7 +187,7 @@ export default function Workouts({ onClassSelect }) {
 
             {/* Loading State */}
             {isLoading && (
-                <div className="empty-state">
+                <div className="empty-state456">
                     <div style={{ fontSize: "1rem", marginBottom: "1rem" }}>
                         Loading workouts...
                     </div>
@@ -193,7 +196,7 @@ export default function Workouts({ onClassSelect }) {
 
             {/* Error State */}
             {error && (
-                <div className="empty-state">
+                <div className="empty-state456">
                     <div
                         style={{
                             color: "var(--color-red, #ef4444)",
@@ -218,49 +221,44 @@ export default function Workouts({ onClassSelect }) {
                 </div>
             )}
 
-            {/* Workouts Grid */}
+            {/* Workouts Grid - Updated to match recommended styling */}
             {!isLoading && !error && (
-                <div className="workouts-grid">
+                <div className="recommended-grid789">
                     {filteredWorkouts().map((workout) => (
                         <div
                             key={workout.id}
-                            className="workout-card"
+                            className="recommended-card012"
                             onClick={() => handleWorkoutClick(workout)}
                         >
-                            <div className="workout-image">
+                            <div className="recommended-image345">
                                 <img
                                     src={workout.image || "/placeholder.svg"}
                                     alt={workout.title}
-                                    className="image-cover"
+                                    className="image-cover678"
                                 />
-                                <div className="duration-badge">
+                                <div className="duration-badge901">
                                     {workout.duration}
                                 </div>
                             </div>
-                            <div className="workout-content">
-                                <div className="workout-meta">
-                                    <span
-                                        className={`workout-level ${workout.level.toLowerCase()}`}
-                                    >
-                                        {workout.level}
-                                    </span>
-                                    <div className="calories-info">
-                                        <Flame
-                                            size={12}
-                                            className="calories-icon"
-                                        />
-                                        <span>{workout.calories} cal</span>
-                                    </div>
-                                </div>
-                                <h3 className="workout-title">
+                            <div className="recommended-content234">
+                                <span
+                                    className={`workout-level567 ${workout.level.toLowerCase()}`}
+                                >
+                                    {workout.level}
+                                </span>
+                                <h3 className="recommended-title890">
                                     {workout.title}
                                 </h3>
-                                <p className="workout-instructor">
+                                <p className="recommended-instructor123">
                                     with {workout.instructor}
                                 </p>
-                                <p className="workout-description">
-                                    {workout.description}
-                                </p>
+                                <div className="calories-info456">
+                                    <Flame
+                                        size={12}
+                                        className="calories-icon789"
+                                    />
+                                    <span>{workout.calories} cal</span>
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -268,10 +266,10 @@ export default function Workouts({ onClassSelect }) {
             )}
 
             {!isLoading && !error && filteredWorkouts().length === 0 && (
-                <div className="empty-state">
-                    <Dumbbell size={48} className="empty-icon" />
-                    <h3 className="empty-title">No workouts found</h3>
-                    <p className="empty-message">
+                <div className="empty-state456">
+                    <Dumbbell size={48} className="empty-icon789" />
+                    <h3 className="empty-title012">No workouts found</h3>
+                    <p className="empty-message345">
                         Try adjusting your search or filters
                     </p>
                 </div>
