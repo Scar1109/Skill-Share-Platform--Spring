@@ -26,14 +26,14 @@ export default function ClassDetails({ onBack }) {
   
   // Mock user ID - in a real app, this would come from authentication
   const currentUserId = "user123"
-  const { courseId } = useParams();
+  const { id} = useParams();
   // Fetch course details and progress when component mounts
   useEffect(() => {
     const fetchCourseData = async () => {
       setIsLoading(true)
       try {
         // 1. Fetch course details
-        const courseResponse = await fetch(`http://localhost:8080/api/courses/${courseId}`)
+        const courseResponse = await fetch(`http://localhost:8080/api/courses/${id}`)
         if (!courseResponse.ok) throw new Error("Failed to fetch course")
         
         const courseData = await courseResponse.json()
@@ -62,7 +62,7 @@ export default function ClassDetails({ onBack }) {
         }
 
         // 3. Fetch user progress (only after we have the course data)
-        const progressResponse = await fetch(`http://localhost:8080/api/progress/course/${courseId}?userId=${currentUserId}`)
+        const progressResponse = await fetch(`http://localhost:8080/api/progress/course/${id}?userId=${currentUserId}`)
         if (progressResponse.ok) {
           const progressData = await progressResponse.json()
           // Find or create progress record
@@ -90,7 +90,7 @@ export default function ClassDetails({ onBack }) {
     }
     
     fetchCourseData()
-  }, [courseId])
+  }, [id])
 
   // Helper function to create new progress record
   const createNewProgress = async () => {
@@ -102,7 +102,7 @@ export default function ClassDetails({ onBack }) {
         },
         body: JSON.stringify({
           userId: currentUserId,
-          courseId: courseId,
+          id: id,
           completedVideos: [],
           overallProgress: 0
         })
@@ -176,12 +176,12 @@ export default function ClassDetails({ onBack }) {
     }
   }
 
-  // Fetch comments when component mounts or courseId changes
+  // Fetch comments when component mounts or id changes
   useEffect(() => {
     const fetchComments = async () => {
       setIsLoading(true)
       try {
-        const response = await fetch(`http://localhost:8080/api/comments/course/${courseId}`)
+        const response = await fetch(`http://localhost:8080/api/comments/course/${id}`)
         if (response.ok) {
           const data = await response.json()
           setComments(data)
@@ -195,10 +195,10 @@ export default function ClassDetails({ onBack }) {
       }
     }
     
-    if (courseId) {
+    if (id) {
       fetchComments()
     }
-  }, [courseId])
+  }, [id])
   
   // Add a new comment
   const handleAddComment = async (e) => {
@@ -207,7 +207,7 @@ export default function ClassDetails({ onBack }) {
     
     try {
       const commentData = {
-        courseId: courseId,
+        id: id,
         userId: currentUserId,
         comment: newComment
       }
