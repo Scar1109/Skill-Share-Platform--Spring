@@ -675,9 +675,9 @@ function WorkoutPlan({ onClassSelect }) {
                             <Plus size={16} />
                             Add Plan
                         </button>
-                        <button className="view-all-btn">
+                        {/* <button className="view-all-btn">
                             View All <ChevronRight size={16} />
-                        </button>
+                        </button> */}
                     </div>
                 </div>
                 <div className="classes-grid">
@@ -754,9 +754,9 @@ function WorkoutPlan({ onClassSelect }) {
             <div className="section">
                 <div className="section-header">
                     <h2 className="section-title">Recommended For You</h2>
-                    <button className="view-all-btn">
+                    {/* <button className="view-all-btn">
                         View All <ChevronRight size={16} />
-                    </button>
+                    </button> */}
                 </div>
                 <div className="recommended-grid">
                     {isLoading ? (
