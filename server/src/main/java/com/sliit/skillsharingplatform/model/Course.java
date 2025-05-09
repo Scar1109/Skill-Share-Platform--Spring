@@ -3,6 +3,7 @@ package com.sliit.skillsharingplatform.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "courses")
@@ -19,6 +20,8 @@ public class Course {
     private Double targetCalery; // Target calery (change from targetSalary)
     private String thumbnail; // URL for the course thumbnail image
     private String category; // Course category (e.g., Programming, Design, etc.)
+    private List<String> likedBy = new ArrayList<>();
+    private List<String> savedBy = new ArrayList<>();
 
     // Constructors, Getters, and Setters
 
@@ -128,5 +131,22 @@ public class Course {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    // Add these getters and setters
+    public List<String> getLikedBy() {
+        return likedBy == null ? new ArrayList<>() : likedBy;
+    }
+
+    public void setLikedBy(List<String> likedBy) {
+        this.likedBy = likedBy;
+    }
+
+    public List<String> getSavedBy() {
+        return savedBy == null ? new ArrayList<>() : savedBy;
+    }
+
+    public void setSavedBy(List<String> savedBy) {
+        this.savedBy = savedBy;
     }
 }

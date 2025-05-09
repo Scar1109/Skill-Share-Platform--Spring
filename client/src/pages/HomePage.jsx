@@ -16,7 +16,7 @@ const HomePage = () => {
 
     // Handle navigation to the learning plan page
     const handleLearnMoreClick = (courseId) => {
-        navigate(`/learning-plan/${courseId}`);
+        navigate(`/learning-plans/${courseId}`);
     };
 
     // Fetch the first 3 courses from the database

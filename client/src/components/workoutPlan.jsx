@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from 'react-router-dom';
 import {
     ChevronRight,
     Plus,
@@ -24,6 +25,7 @@ import "../css/workoutplan.css";
 import "../css/antd-modal.css";
 import "../css/videos-section.css";
 
+
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -42,6 +44,12 @@ function WorkoutPlan({ onClassSelect }) {
     const [availableVideos, setAvailableVideos] = useState([]);
     const [selectedVideos, setSelectedVideos] = useState([]);
     const [isLoadingVideos, setIsLoadingVideos] = useState(false);
+    const navigate = useNavigate();
+
+    const handleClassSelect = (classItem) => {
+        console.log('Navigating to:', classItem.id);
+        navigate(`/learning-plans/${classItem.id}`);
+    };
 
     // Fetch plans from the API
     const fetchPlans = async () => {
@@ -667,9 +675,9 @@ function WorkoutPlan({ onClassSelect }) {
                             <Plus size={16} />
                             Add Plan
                         </button>
-                        <button className="view-all-btn">
+                        {/* <button className="view-all-btn">
                             View All <ChevronRight size={16} />
-                        </button>
+                        </button> */}
                     </div>
                 </div>
                 <div className="classes-grid">
@@ -686,7 +694,7 @@ function WorkoutPlan({ onClassSelect }) {
                             <div
                                 key={classItem.id}
                                 className="class-card"
-                                onClick={() => onClassSelect(classItem)}
+                                onClick={() => handleClassSelect(classItem)}
                             >
                                 <div className="class-image">
                                     <img
@@ -730,9 +738,9 @@ function WorkoutPlan({ onClassSelect }) {
                                     <h3 className="class-title">
                                         {classItem.title}
                                     </h3>
-                                    <p className="class-instructor">
+                                    {/* <p className="class-instructor">
                                         with {classItem.instructor}
-                                    </p>
+                                    </p> */}
                                     <p className="class-description">
                                         {classItem.description}
                                     </p>
@@ -746,9 +754,9 @@ function WorkoutPlan({ onClassSelect }) {
             <div className="section">
                 <div className="section-header">
                     <h2 className="section-title">Recommended For You</h2>
-                    <button className="view-all-btn">
+                    {/* <button className="view-all-btn">
                         View All <ChevronRight size={16} />
-                    </button>
+                    </button> */}
                 </div>
                 <div className="recommended-grid">
                     {isLoading ? (
@@ -764,7 +772,7 @@ function WorkoutPlan({ onClassSelect }) {
                             <div
                                 key={classItem.id}
                                 className="recommended-card"
-                                onClick={() => onClassSelect(classItem)}
+                                onClick={() => handleClassSelect(classItem)}
                             >
                                 <div className="recommended-image">
                                     <img
@@ -806,9 +814,9 @@ function WorkoutPlan({ onClassSelect }) {
                                     <h3 className="recommended-title">
                                         {classItem.title}
                                     </h3>
-                                    <p className="recommended-instructor">
+                                    {/* <p className="recommended-instructor">
                                         with {classItem.instructor}
-                                    </p>
+                                    </p> */}
                                 </div>
                             </div>
                         ))
