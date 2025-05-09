@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { Plus, Edit, Trash2, X, Upload } from "lucide-react"
-import "../css/add-course-video.css";
+import "../css/add-course-video.css"
 
 export default function AddCourseVideo() {
   const [videos, setVideos] = useState([])
@@ -132,10 +132,20 @@ export default function AddCourseVideo() {
         throw new Error("Failed to upload video")
       }
 
-      // The response should contain the file path
-      const data = await response.text()
-      const fileName = file.name
-      return `/uploads/${fileName}`
+      // The response contains the file path in the videoUrl property
+      // const data = await response.json()
+      // return data.videoUrl
+      // Check the content type of the response
+      const contentType = response.headers.get("content-type")
+      if (contentType && contentType.includes("application/json")) {
+        // If it's JSON, parse it and get the videoUrl
+        const data = await response.json()
+        return data.videoUrl
+      } else {
+        // If it's not JSON, assume it's text and the entire response is the URL
+        const text = await response.text()
+        return text
+      }
     } catch (error) {
       console.error("Error uploading video:", error)
       throw error
@@ -263,11 +273,21 @@ export default function AddCourseVideo() {
           videos.map((video) => (
             <div key={video.id} className="video-card">
               <div className="video-preview">
-                <video controls className="video-player">
-                  <source src={video.videoUrl} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+                {video.videoUrl ? (
+                  <video controls className="video-player">
+                    <source
+                      src={
+                        video.videoUrl.startsWith("http") ? video.videoUrl : `http://localhost:8080${video.videoUrl}`
+                      }
+                      type="video/mp4"
+                    />
+                    Your browser does not support the video tag.
+                  </video>
+                ) : (
+                  <div className="no-video">No video available</div>
+                )}
               </div>
+
               <div className="video-info">
                 <h3 className="video-title">{video.title}</h3>
                 <p className="video-category">{video.category}</p>

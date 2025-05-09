@@ -2,10 +2,12 @@ package com.sliit.skillsharingplatform.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,62 +17,85 @@ import java.nio.file.Paths;
 @RequestMapping("/api/videos")
 public class VideoUploadController {
 
-    // Define the directory where videos will be uploaded
     private static final String UPLOAD_DIR = "uploads/";
-
-    // Maximum file size (10 MB for example)
-    private static final long MAX_FILE_SIZE = 10 * 1024 * 1024;
-
-    // Valid video file extensions
+    private static final long   MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
     private static final String[] VALID_VIDEO_EXTENSIONS = {".mp4", ".avi", ".mov", ".mkv", ".flv"};
 
-    // POST request to upload video
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadVideo(@RequestParam("file") MultipartFile file) {
-        // Ensure the upload directory exists
+    public ResponseEntity<UploadResponse> uploadVideo(@RequestParam("file") MultipartFile file) {
+        // 1) ensure upload dir exists
         File uploadDir = new File(UPLOAD_DIR);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
         }
 
-        // Validate file size
+        // 2) size check
         if (file.getSize() > MAX_FILE_SIZE) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("File size exceeds the maximum limit of 10 MB.");
+            return ResponseEntity.badRequest()
+                    .body(new UploadResponse("File too large"));
         }
 
-        // Validate file type
-        if (!isValidVideoFile(file.getOriginalFilename())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Invalid video file type. Supported formats: .mp4, .avi, .mov, .mkv, .flv.");
+        // 3) extension check
+        String ext = getExtension(file.getOriginalFilename());
+        if (!isValidExtension(ext)) {
+            return ResponseEntity.badRequest()
+                    .body(new UploadResponse("Invalid file type"));
         }
 
         try {
-            // Get file's original name
-            String fileName = file.getOriginalFilename();
-            // Define the path to store the uploaded video
-            Path path = Paths.get(UPLOAD_DIR + fileName);
+            // 4) generate next vid### name
+            String newName = nextVidName(uploadDir, ext);
+            Path target = Paths.get(UPLOAD_DIR + newName);
 
-            // Save the video file
-            Files.write(path, file.getBytes());
+            // 5) save to disk
+            Files.write(target, file.getBytes());
 
-            // Return the video URL for download or access
-            String videoUrl = "/uploads/" + fileName;  // This assumes your server serves the file from the `uploads` folder
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body("Video uploaded successfully. Access it here: " + videoUrl);
+            // 6) return the URL path
+            String videoUrl = "/uploads/" + newName;
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(new UploadResponse(videoUrl));
+
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to upload video: " + e.getMessage());
+                    .body(new UploadResponse("Server error: " + e.getMessage()));
         }
     }
 
-    // Helper method to validate file type (based on extension)
-    private boolean isValidVideoFile(String fileName) {
-        for (String ext : VALID_VIDEO_EXTENSIONS) {
-            if (fileName.toLowerCase().endsWith(ext)) {
-                return true;
-            }
+    private boolean isValidExtension(String ext) {
+        for (String v : VALID_VIDEO_EXTENSIONS) {
+            if (v.equalsIgnoreCase(ext)) return true;
         }
         return false;
+    }
+
+    private String getExtension(String filename) {
+        String clean = StringUtils.getFilename(filename);
+        int idx = clean.lastIndexOf('.');
+        return (idx >= 0 ? clean.substring(idx) : "");
+    }
+
+    private String nextVidName(File dir, String ext) {
+        // list all files matching vid###.ext
+        String[] existing = dir.list((d, name) -> name.startsWith("vid") && name.endsWith(ext));
+        int max = 0;
+        if (existing != null) {
+            for (String n : existing) {
+                try {
+                    // parse the number between "vid" and ".ext"
+                    int num = Integer.parseInt(n.substring(3, n.length() - ext.length()));
+                    max = Math.max(max, num);
+                } catch (NumberFormatException ignored) {}
+            }
+        }
+        int next = max + 1;
+        return String.format("vid%03d%s", next, ext);
+    }
+
+    // simple DTO for JSON response
+    static class UploadResponse {
+        private String videoUrl;
+        public UploadResponse(String videoUrl) { this.videoUrl = videoUrl; }
+        public String getVideoUrl() { return videoUrl; }
     }
 }
