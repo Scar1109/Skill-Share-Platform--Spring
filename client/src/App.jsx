@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 import NavBar from "./components/NavBar";
+import WorkoutsList from "./pages/WorkoutsList";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                     <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/learning-plans" element={<LearningPlanList />} />
                     <Route path="/learning-plans/:id" element={<LearningPlanPage />} />
+                    <Route path="/workouts" element={<WorkoutsList />} />
                 </Routes>
             </div>
         </BrowserRouter>
