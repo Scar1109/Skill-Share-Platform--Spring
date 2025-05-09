@@ -19,7 +19,7 @@ function App() {
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/learning-plans" element={<LearningPlanList />} />
-                    <Route path="/learning-plans/:id" element={<LearningPlanPage />} />
+                    <Route path="/learning-plans/:courseId" element={<LearningPlanPage />} />
                 </Routes>
             </div>
         </BrowserRouter>
