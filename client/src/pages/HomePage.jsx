@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import WorkoutList from "../pages/WorkoutsList"; 
 import "../css/home.css";
 
 const HomePage = () => {
@@ -8,6 +9,10 @@ const HomePage = () => {
     const [isScrolled, setIsScrolled] = useState(false)
     const [popularSkills, setPopularSkills] = useState([])
     const [isSkillsLoading, setIsSkillsLoading] = useState(true)
+
+    const handleViewAllClick = () => {
+        navigate("/workouts");
+    };
 
     // Fetch the first 3 courses from the database
     const fetchPopularSkills = async () => {
@@ -133,9 +138,9 @@ const HomePage = () => {
                 </div>
                 <div className="skills-grid567">
                     {isSkillsLoading ? (
-                        <div style={{ textAlign: "center", gridColumn: "1 / -1" }}>Loading skills...</div>
+                        <div style={{ textAlign: "center", gridColumn: "1 / -1" }}>Loading Workout Plans...</div>
                     ) : popularSkills.length === 0 ? (
-                        <div style={{ textAlign: "center", gridColumn: "1 / -1" }}>No skills found. Add your first skill!</div>
+                        <div style={{ textAlign: "center", gridColumn: "1 / -1" }}>No Workout Plans found. Add your first Workout Plan!</div>
                     ) : (
                         popularSkills.map((skill) => (
                             <div className="skill-card890" key={skill.id}>
@@ -178,7 +183,7 @@ const HomePage = () => {
                     )}
                 </div>
                 <div className="view-all-container890">
-                    <button className="view-all-btn123">View All Skills</button>
+                    <button className="view-all-btn123" onClick={handleViewAllClick}>View All Workout Plans</button>
                 </div>
             </section>
 
