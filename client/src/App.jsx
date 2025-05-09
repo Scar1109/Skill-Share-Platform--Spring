@@ -13,6 +13,7 @@ import RegisterPage from "./pages/RegisterPage";
 import OAuth2Callback from "./pages/OAuth2Callback";
 import ErrorPage from "./pages/ErrorPage";
 import NavBar from "./components/NavBar";
+import WorkoutsList from "./pages/WorkoutsList";
 
 // Protected route component
 const ProtectedRoute = ({ children }) => {
@@ -76,6 +77,10 @@ function App() {
                     />
                     {/* Catch-all route for 404 errors */}
                     <Route path="*" element={<ErrorPage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
+                    <Route path="/learning-plans" element={<LearningPlanList />} />
+                    <Route path="/learning-plans/:id" element={<LearningPlanPage />} />
+                    <Route path="/workouts" element={<WorkoutsList />} />
                 </Routes>
             </div>
         </BrowserRouter>

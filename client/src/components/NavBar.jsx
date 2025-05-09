@@ -213,7 +213,7 @@ function NavBar() {
                     </li>
                     <li className="nav-item123">
                         <a href="#skills" className="nav-link456">
-                            Skills
+                            Workouts
                         </a>
                     </li>
                     <li className="nav-item123">
