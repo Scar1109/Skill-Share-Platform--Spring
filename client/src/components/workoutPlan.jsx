@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import {
     ChevronRight,
     Plus,
@@ -25,10 +25,9 @@ import "../css/workoutplan.css";
 import "../css/antd-modal.css";
 import "../css/videos-section.css";
 
+
 const { TextArea } = Input;
 const { Option } = Select;
-
-const user = JSON.parse(localStorage.getItem("user"));
 
 function WorkoutPlan({ onClassSelect }) {
     const [plans, setPlans] = useState([]);
@@ -48,9 +47,11 @@ function WorkoutPlan({ onClassSelect }) {
     const navigate = useNavigate();
 
     const handleClassSelect = (classItem) => {
+        console.log('Navigating to:', classItem.id);
         navigate(`/learning-plans/${classItem.id}`);
     };
 
+    // Fetch plans from the API
     const fetchPlans = async () => {
         setIsLoading(true);
         setError(null);
@@ -60,6 +61,7 @@ function WorkoutPlan({ onClassSelect }) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const data = await response.json();
+
             const mappedData = data.map((plan) => ({
                 id: plan.id,
                 title: plan.courseTitle,
@@ -80,14 +82,17 @@ function WorkoutPlan({ onClassSelect }) {
                 thumbnail: plan.thumbnail,
                 category: plan.category || "Yoga",
             }));
+
             setPlans(mappedData);
         } catch (error) {
+            console.error("Error fetching plans:", error);
             setError("Failed to load workout plans: " + error.message);
         } finally {
             setIsLoading(false);
         }
     };
 
+    // Fetch videos from the API
     const fetchVideos = async () => {
         setIsLoadingVideos(true);
         try {
@@ -99,6 +104,7 @@ function WorkoutPlan({ onClassSelect }) {
             const videoPosts = data.filter((post) => post.videoUrl);
             setAvailableVideos(videoPosts);
         } catch (error) {
+            console.error("Error fetching videos:", error);
             setError("Failed to load videos: " + error.message);
         } finally {
             setIsLoadingVideos(false);
@@ -107,11 +113,13 @@ function WorkoutPlan({ onClassSelect }) {
 
     useEffect(() => {
         fetchPlans();
-        fetchVideos();
+        fetchVideos(); // Fetch videos when component mounts
     }, []);
 
+    // Handle image upload via backend
     const handleImageUpload = async (file) => {
         if (!file) return;
+
         const validTypes = [
             "image/jpeg",
             "image/png",
@@ -126,14 +134,17 @@ function WorkoutPlan({ onClassSelect }) {
             setError("Image size must be less than 32MB");
             return;
         }
+
         const reader = new FileReader();
         reader.onloadend = () => {
             setImagePreview(reader.result);
         };
         reader.readAsDataURL(file);
+
         try {
             const formData = new FormData();
             formData.append("image", file);
+
             const response = await fetch(
                 "http://localhost:8080/api/courses/upload-image",
                 {
@@ -141,16 +152,19 @@ function WorkoutPlan({ onClassSelect }) {
                     body: formData,
                 }
             );
+
             if (!response.ok) {
                 const errorText = await response.text();
                 throw new Error(
                     `Image upload failed! Status: ${response.status}, Message: ${errorText}`
                 );
             }
+
             const imageUrl = await response.text();
             form.setFieldsValue({ thumbnail: imageUrl });
             return imageUrl;
         } catch (error) {
+            console.error("Error uploading image:", error);
             setError("Failed to upload image: " + error.message);
             return null;
         }
@@ -160,10 +174,11 @@ function WorkoutPlan({ onClassSelect }) {
         setError(null);
         try {
             const videoIds = selectedVideos.map((video) => video.id);
+
             const planData = {
                 courseTitle: values.courseTitle,
                 courseDescription: values.courseDescription,
-                trainerUserId: user?.id,
+                trainerUserId: values.trainerUserId,
                 courses: videoIds,
                 courseDetail: values.courseDetail || "",
                 durationMinutes: Number(values.durationMinutes),
@@ -172,6 +187,7 @@ function WorkoutPlan({ onClassSelect }) {
                 thumbnail: values.thumbnail,
                 category: values.category,
             };
+
             const response = await fetch("http://localhost:8080/api/courses", {
                 method: "POST",
                 headers: {
@@ -179,12 +195,14 @@ function WorkoutPlan({ onClassSelect }) {
                 },
                 body: JSON.stringify(planData),
             });
+
             if (!response.ok) {
                 const errorText = await response.text();
                 throw new Error(
                     `HTTP error! Status: ${response.status}, Message: ${errorText}`
                 );
             }
+
             await response.json();
             fetchPlans();
             setShowAddModal(false);
@@ -200,11 +218,12 @@ function WorkoutPlan({ onClassSelect }) {
         setError(null);
         try {
             const videoIds = selectedVideos.map((video) => video.id);
+
             const planData = {
                 id: currentPlan.id,
                 courseTitle: values.courseTitle,
                 courseDescription: values.courseDescription,
-                trainerUserId: user?.id,
+                trainerUserId: values.trainerUserId,
                 courses: videoIds,
                 courseDetail: values.courseDetail || "",
                 durationMinutes: Number(values.durationMinutes),
@@ -213,6 +232,7 @@ function WorkoutPlan({ onClassSelect }) {
                 thumbnail: values.thumbnail,
                 category: values.category,
             };
+
             const response = await fetch(
                 `http://localhost:8080/api/courses/${currentPlan.id}`,
                 {
@@ -223,12 +243,14 @@ function WorkoutPlan({ onClassSelect }) {
                     body: JSON.stringify(planData),
                 }
             );
+
             if (!response.ok) {
                 const errorText = await response.text();
                 throw new Error(
                     `HTTP error! Status: ${response.status}, Message: ${errorText}`
                 );
             }
+
             await response.json();
             fetchPlans();
             setShowEditModal(false);
@@ -255,12 +277,14 @@ function WorkoutPlan({ onClassSelect }) {
                     method: "DELETE",
                 }
             );
+
             if (!response.ok) {
                 const errorText = await response.text();
                 throw new Error(
                     `HTTP error! Status: ${response.status}, Message: ${errorText}`
                 );
             }
+
             fetchPlans();
             setShowDeleteModal(false);
             setPlanToDelete(null);
@@ -280,11 +304,14 @@ function WorkoutPlan({ onClassSelect }) {
                 ? Number.parseInt(durationMatch[1])
                 : 30;
         }
+
         setCurrentPlan(plan);
         setImagePreview(plan.thumbnail || null);
+
         form.setFieldsValue({
             courseTitle: plan.courseTitle || "",
             courseDescription: plan.courseDescription || "",
+            trainerUserId: plan.trainerUserId || "",
             courseDetail: plan.courseDetail || "",
             durationMinutes: durationMinutes || 30,
             level: plan.level || "Beginner",
@@ -292,6 +319,8 @@ function WorkoutPlan({ onClassSelect }) {
             thumbnail: plan.thumbnail || null,
             category: plan.category || "Yoga",
         });
+
+        // Set selected videos for editing
         if (plan.courses && plan.courses.length > 0) {
             const selectedVideoObjects = availableVideos.filter((video) =>
                 plan.courses.includes(video.id)
@@ -300,11 +329,13 @@ function WorkoutPlan({ onClassSelect }) {
         } else {
             setSelectedVideos([]);
         }
+
         setShowEditModal(true);
     };
 
     const handleVideoSelect = (video) => {
         const isSelected = selectedVideos.some((v) => v.id === video.id);
+
         if (isSelected) {
             setSelectedVideos(selectedVideos.filter((v) => v.id !== video.id));
         } else {
@@ -348,6 +379,7 @@ function WorkoutPlan({ onClassSelect }) {
                     initialValues={{
                         courseTitle: "",
                         courseDescription: "",
+                        trainerUserId: "",
                         courseDetail: "",
                         durationMinutes: 30,
                         level: "Beginner",
@@ -381,6 +413,20 @@ function WorkoutPlan({ onClassSelect }) {
 
                     <div className="form-row">
                         <Form.Item
+                            label="Instructor"
+                            name="trainerUserId"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter an instructor",
+                                },
+                            ]}
+                            className="form-group1"
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item
                             label="Level"
                             name="level"
                             className="form-group1"
@@ -394,7 +440,9 @@ function WorkoutPlan({ onClassSelect }) {
                                 <Option value="Advanced">Advanced</Option>
                             </Select>
                         </Form.Item>
+                    </div>
 
+                    <div className="form-row">
                         <Form.Item
                             label="Duration (minutes)"
                             name="durationMinutes"
@@ -408,9 +456,7 @@ function WorkoutPlan({ onClassSelect }) {
                         >
                             <InputNumber min={1} style={{ width: "100%" }} />
                         </Form.Item>
-                    </div>
 
-                    <div className="form-row">
                         <Form.Item
                             label="Target Calories"
                             name="targetCalery"
@@ -428,17 +474,17 @@ function WorkoutPlan({ onClassSelect }) {
                                 style={{ width: "100%" }}
                             />
                         </Form.Item>
-
-                        <Form.Item label="Category" name="category">
-                            <Select className="custom-select-dark">
-                                <Option value="Yoga">Yoga</Option>
-                                <Option value="Pilates">Pilates</Option>
-                                <Option value="Cardio">Cardio</Option>
-                                <Option value="Strength">Strength</Option>
-                                <Option value="Stretching">Stretching</Option>
-                            </Select>
-                        </Form.Item>
                     </div>
+
+                    <Form.Item label="Category" name="category">
+                        <Select className="custom-select-dark">
+                            <Option value="Yoga">Yoga</Option>
+                            <Option value="Pilates">Pilates</Option>
+                            <Option value="Cardio">Cardio</Option>
+                            <Option value="Strength">Strength</Option>
+                            <Option value="Stretching">Stretching</Option>
+                        </Select>
+                    </Form.Item>
 
                     <Form.Item
                         label="Thumbnail Image"
@@ -483,6 +529,7 @@ function WorkoutPlan({ onClassSelect }) {
                         <h4 className="videos-title-5678">
                             Select videos for this course
                         </h4>
+
                         {isLoadingVideos ? (
                             <div className="videos-loading-9012">
                                 <Spin size="small" />
@@ -628,6 +675,9 @@ function WorkoutPlan({ onClassSelect }) {
                             <Plus size={16} />
                             Add Plan
                         </button>
+                        {/* <button className="view-all-btn">
+                            View All <ChevronRight size={16} />
+                        </button> */}
                     </div>
                 </div>
                 <div className="classes-grid">
@@ -688,9 +738,9 @@ function WorkoutPlan({ onClassSelect }) {
                                     <h3 className="class-title">
                                         {classItem.title}
                                     </h3>
-                                    <p className="class-instructor">
+                                    {/* <p className="class-instructor">
                                         with {classItem.instructor}
-                                    </p>
+                                    </p> */}
                                     <p className="class-description">
                                         {classItem.description}
                                     </p>
@@ -704,6 +754,9 @@ function WorkoutPlan({ onClassSelect }) {
             <div className="section">
                 <div className="section-header">
                     <h2 className="section-title">Recommended For You</h2>
+                    {/* <button className="view-all-btn">
+                        View All <ChevronRight size={16} />
+                    </button> */}
                 </div>
                 <div className="recommended-grid">
                     {isLoading ? (
@@ -761,9 +814,9 @@ function WorkoutPlan({ onClassSelect }) {
                                     <h3 className="recommended-title">
                                         {classItem.title}
                                     </h3>
-                                    <p className="recommended-instructor">
+                                    {/* <p className="recommended-instructor">
                                         with {classItem.instructor}
-                                    </p>
+                                    </p> */}
                                 </div>
                             </div>
                         ))
