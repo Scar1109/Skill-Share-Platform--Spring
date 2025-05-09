@@ -503,7 +503,7 @@
 }
 
 .stat-item {
-  display: flex;
+  display: flex;l
   align-items: center;
   gap: 1rem;
 }
@@ -527,16 +527,19 @@
 
 .stat-info {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 2rem;
 }
 
 .stat-label {
-  font-size: 0.75rem;
+  font-size: 1rem;
+  margin-top: 4%;
   color: var(--color-text-secondary);
 }
 
 .stat-value {
-  font-weight: 500;
+  font-weight: 900;
+  
 }
 
 .progress-summary {
