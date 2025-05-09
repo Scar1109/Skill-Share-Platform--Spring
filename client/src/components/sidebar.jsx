@@ -5,9 +5,7 @@ export default function Sidebar({ activeView, setActiveView }) {
   const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: Home },
     { id: "calendar", label: "Calendar", icon: Calendar },
-    { id: "workouts", label: "Workouts", icon: Dumbbell },
     { id: "profile", label: "Profile", icon: User },
-    { id: "stats", label: "Statistics", icon: BarChart2 },
   ]
 
   // New instructor menu items

@@ -1,24 +1,24 @@
-.workouts-page {
+.workouts-page123 {
   padding: 2rem;
 }
 
-.workouts-header {
+.workouts-header456 {
   margin-bottom: 2rem;
 }
 
-.search-container {
+.search-container012 {
   display: flex;
   align-items: center;
   gap: 1rem;
   margin-bottom: 2rem;
 }
 
-.search-input-wrapper {
+.search-input-wrapper345 {
   position: relative;
   flex: 1;
 }
 
-.search-icon {
+.search-icon678 {
   position: absolute;
   left: 0.75rem;
   top: 50%;
@@ -26,7 +26,7 @@
   color: var(--color-text-secondary);
 }
 
-.search-input {
+.search-input901 {
   width: 100%;
   padding: 0.75rem 1rem 0.75rem 2.5rem;
   background-color: var(--color-card-bg);
@@ -36,12 +36,12 @@
   font-size: 0.875rem;
 }
 
-.search-input:focus {
+.search-input901:focus {
   outline: none;
   border-color: var(--color-green-primary);
 }
 
-.filter-button {
+.filter-button234 {
   padding: 0.5rem;
   background-color: var(--color-card-bg);
   border: 1px solid var(--color-card-border);
@@ -51,11 +51,11 @@
   transition: background-color 0.2s;
 }
 
-.filter-button:hover {
+.filter-button234:hover {
   background-color: var(--color-gray-800);
 }
 
-.categories-tabs {
+.categories-tabs567 {
   display: flex;
   background-color: var(--color-card-bg);
   padding: 0.25rem;
@@ -64,7 +64,7 @@
   overflow-x: auto;
 }
 
-.category-tab {
+.category-tab890 {
   padding: 0.5rem 1rem;
   background-color: transparent;
   border: none;
@@ -76,40 +76,40 @@
   white-space: nowrap;
 }
 
-.category-tab:hover {
+.category-tab890:hover {
   background-color: var(--color-gray-800);
 }
 
-.category-tab.active {
+.category-tab890.active123 {
   background-color: var(--color-green-primary);
   color: black;
 }
 
-.workouts-grid {
+.workouts-grid123 {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 1.5rem;
 }
 
 @media (min-width: 640px) {
-  .workouts-grid {
+  .workouts-grid123 {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 768px) {
-  .workouts-grid {
+  .workouts-grid123 {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
-  .workouts-grid {
+  .workouts-grid123 {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-.workout-card {
+.workout-card456 {
   background-color: var(--color-card-bg);
   border: 1px solid var(--color-card-border);
   border-radius: var(--border-radius);
@@ -118,80 +118,71 @@
   transition: border-color 0.2s;
 }
 
-.workout-card:hover {
+.workout-card456:hover {
   border-color: var(--color-gray-700);
 }
 
-.workout-image {
+.workout-image789 {
   position: relative;
-  height: 10rem;
+  height: 15rem;
   width: 100%;
 }
 
-.duration-badge {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  font-size: 0.75rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-}
-
-.workout-content {
+.workout-content012 {
   padding: 1rem;
 }
 
-.workout-meta {
+.workout-meta345 {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.5rem;
 }
 
-.workout-level {
+.workout-level567 {
   font-size: 0.75rem;
   padding: 0.25rem 0.5rem;
   border-radius: 9999px;
 }
 
-.workout-level.beginner {
+.workout-level567.beginner {
   background-color: var(--color-purple);
 }
 
-.workout-level.intermediate {
+.workout-level567.intermediate,
+.workout-level567.moderate {
   background-color: var(--color-blue);
 }
 
-.workout-level.advanced {
+.workout-level567.advanced {
   background-color: var(--color-red);
 }
 
-.calories-info {
+.calories-info456 {
   display: flex;
   align-items: center;
   color: var(--color-text-secondary);
   font-size: 0.75rem;
+  margin-top: 0.5rem;
 }
 
-.calories-icon {
+.calories-icon789 {
   margin-right: 0.25rem;
 }
 
-.workout-title {
+.workout-title890 {
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 0.25rem;
 }
 
-.workout-instructor {
+.workout-instructor123 {
   font-size: 0.75rem;
   color: var(--color-text-secondary);
   margin-bottom: 0.5rem;
 }
 
-.workout-description {
+.workout-description456 {
   font-size: 0.75rem;
   color: var(--color-text-muted);
   display: -webkit-box;
@@ -200,22 +191,111 @@
   overflow: hidden;
 }
 
-.empty-state {
+.empty-state456 {
   text-align: center;
   padding: 3rem 0;
 }
 
-.empty-icon {
+.empty-icon789 {
   color: var(--color-gray-600);
   margin-bottom: 1rem;
 }
 
-.empty-title {
+.empty-title012 {
   font-size: 1.25rem;
   font-weight: 500;
   margin-bottom: 0.5rem;
 }
 
-.empty-message {
+.empty-message345 {
+  color: var(--color-text-secondary);
+}
+
+/* Added styles for recommended card layout with unique class names */
+.recommended-grid789 {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .recommended-grid789 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .recommended-grid789 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .recommended-grid789 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.recommended-card012 {
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  position: relative;
+}
+
+.recommended-card012:hover {
+  border-color: var(--color-gray-700);
+}
+
+.recommended-image345 {
+  position: relative;
+  width: 100%;
+  height: 17rem;
+  overflow: hidden;
+}
+
+.recommended-image345 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-cover678 {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.duration-badge901 {
+  margin-right: 77%;
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recommended-content234 {
+  padding: 0.75rem;
+}
+
+.recommended-title890 {
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin: 0.5rem 0 0.25rem;
+}
+
+.recommended-instructor123 {
+  font-size: 0.75rem;
   color: var(--color-text-secondary);
 }
