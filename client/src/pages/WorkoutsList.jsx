@@ -249,9 +249,9 @@ export default function Workouts({ onClassSelect }) {
                                 <h3 className="recommended-title890">
                                     {workout.title}
                                 </h3>
-                                {/* <p className="recommended-instructor123">
+                                <p className="recommended-instructor123">
                                     with {workout.instructor}
-                                </p> */}
+                                </p>
                                 <div className="calories-info456">
                                     <Flame
                                         size={12}
