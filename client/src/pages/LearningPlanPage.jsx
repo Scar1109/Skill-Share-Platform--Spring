@@ -98,8 +98,11 @@ export default function ClassDetails({ onBack }) {
     // Share state
     const [isSharing, setIsSharing] = useState(false);
 
-    // Mock user ID - in a real app, this would come from authentication
-    const currentUserId = "user123";
+    const raw = localStorage.getItem("user");
+    const userId = raw ? JSON.parse(raw).id : null;
+
+    console.log("current user ID:", userId);
+    const currentUserId = userId;
     const { id } = useParams();
 
     // Fetch course details and progress when component mounts
@@ -208,7 +211,7 @@ export default function ClassDetails({ onBack }) {
                 },
                 body: JSON.stringify({
                     userId: currentUserId,
-                    id: id,
+                    courseId: id,
                     completedVideos: [],
                     overallProgress: 0,
                 }),
@@ -229,37 +232,37 @@ export default function ClassDetails({ onBack }) {
 
         const progress = (completedVideos.length / videoSeries.length) * 100;
         setOverallProgress(progress);
-        updateProgressInBackend(progress);
     }, [completedVideos, videoSeries.length]);
 
     // Update progress in backend
-    const updateProgressInBackend = async (progress) => {
-        if (!progressId) return;
+    // const updateProgressInBackend = async (progress) => {
+    //     if (!progressId) return;
 
-        try {
-            const response = await fetch(
-                `http://localhost:8080/api/progress/${progressId}`,
-                {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        completedVideos,
-                        overallProgress: progress,
-                    }),
-                }
-            );
+    //     try {
+    //         const response = await fetch(
+    //             `http://localhost:8080/api/progress/${progressId}`,
+    //             {
+    //                 method: "PUT",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                 },
+    //                 body: JSON.stringify({
+    //                     completedVideos,
+    //                     overallProgress: progress,
+    //                 }),
+    //             }
+    //         );
 
-            if (!response.ok) {
-                console.error("Failed to update progress");
-            }
-        } catch (error) {
-            console.error("Error updating progress:", error);
-        }
-    };
+    //         if (!response.ok) {
+    //             console.error("Failed to update progress");
+    //         }
+    //     } catch (error) {
+    //         console.error("Error updating progress:", error);
+    //     }
+    // };
 
     // Handle like toggle
+    
     const handleLikeToggle = async () => {
         try {
             const response = await fetch(
@@ -680,7 +683,7 @@ export default function ClassDetails({ onBack }) {
 
         try {
             const commentData = {
-                id: id,
+                courseId: id,
                 userId: currentUserId,
                 comment: newComment,
             };
