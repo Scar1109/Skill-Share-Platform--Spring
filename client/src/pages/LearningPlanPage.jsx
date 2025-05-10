@@ -25,8 +25,8 @@ export default function ClassDetails({ onBack }) {
   const [isLoading, setIsLoading] = useState(false)
   
   // Mock user ID - in a real app, this would come from authentication
-  const currentUserId = "user123"
-  const { id} = useParams();
+  const currentUserId = localStorage.getItem("userId")
+  const { id } = useParams();
   // Fetch course details and progress when component mounts
   useEffect(() => {
     const fetchCourseData = async () => {
