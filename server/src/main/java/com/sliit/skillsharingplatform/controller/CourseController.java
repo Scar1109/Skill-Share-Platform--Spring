@@ -131,4 +131,50 @@ public class CourseController {
                     .body("Image upload failed: " + e.getMessage());
         }
     }
+
+    @PutMapping("/{id}/like/{userId}")
+    public ResponseEntity<Course> toggleLike(@PathVariable String id, @PathVariable String userId) {
+        Optional<Course> optionalCourse = courseService.getCourseById(id);
+
+        if (optionalCourse.isPresent()) {
+            Course course = optionalCourse.get();
+            List<String> likedBy = course.getLikedBy();
+
+            // Toggle like status
+            if (likedBy.contains(userId)) {
+                likedBy.remove(userId);
+            } else {
+                likedBy.add(userId);
+            }
+
+            course.setLikedBy(likedBy);
+            Course updatedCourse = courseService.updateCourse(course);
+            return ResponseEntity.ok(updatedCourse);
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{id}/save/{userId}")
+    public ResponseEntity<Course> toggleSave(@PathVariable String id, @PathVariable String userId) {
+        Optional<Course> optionalCourse = courseService.getCourseById(id);
+
+        if (optionalCourse.isPresent()) {
+            Course course = optionalCourse.get();
+            List<String> savedBy = course.getSavedBy();
+
+            // Toggle save status
+            if (savedBy.contains(userId)) {
+                savedBy.remove(userId);
+            } else {
+                savedBy.add(userId);
+            }
+
+            course.setSavedBy(savedBy);
+            Course updatedCourse = courseService.updateCourse(course);
+            return ResponseEntity.ok(updatedCourse);
+        }
+
+        return ResponseEntity.notFound().build();
+    }
 }
